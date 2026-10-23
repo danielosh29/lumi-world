@@ -129,12 +129,24 @@
   .chip.pink { background: var(--pink); color: #5c1540; }
   .chip.sky { background: var(--sky); color: #0c3f55; }
   .chip.sun { background: var(--sun); color: #4a3300; }
+  .chip.mint { background: var(--mint); color: var(--mint-ink); }
 
   /* coloring shelf */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
+  .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+  .filters button { font-family: var(--display); font-weight: 600; font-size: .95rem; border: 2px solid var(--line); background: var(--paper); color: var(--muted); border-radius: 999px; padding: 8px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+  .filters button .n { font-family: var(--body); font-weight: 800; font-size: .75rem; background: var(--bg); border-radius: 999px; padding: 1px 8px; }
+  .filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .filters button[aria-pressed="true"] .n { background: rgba(255,255,255,.18); color: inherit; }
+  .filters button.spooky[aria-pressed="true"] { background: #4a2a7a; border-color: #4a2a7a; }
+  .card[hidden] { display: none !important; }
+  .card .tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .card .tags .chip { font-size: .7rem; padding: 2px 9px; }
   .card { background: var(--paper); border-radius: 24px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
   .card .thumb { margin: 14px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
-  .card .thumb img { display: block; width: 100%; height: auto; }
+  .card .thumb { aspect-ratio: 3 / 4; }
+  .card .thumb img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+  .chip.spooky { background: #4a2a7a; color: #ffd45e; }
   .card-body { padding: 0 18px 20px; display: grid; gap: 10px; }
   .card-body p { color: var(--muted); font-size: .95rem; }
   .card .btn { padding: 10px 18px; font-size: .95rem; width: fit-content; }
@@ -232,8 +244,9 @@
     <div class="section-head">
       <span class="eyebrow">Print &amp; color</span>
       <h2 class="bubble">Coloring pages</h2>
-      <p>Letter-size PDFs, ready to print at home or in class. New pages arrive with each episode.</p>
+      <p>Letter-size PDFs, ready to print at home or in class. Pick a friend, or grab the whole gang. New pages arrive with each episode.</p>
     </div>
+    <div class="filters" id="coloring-filters" role="group" aria-label="Filter coloring pages"></div>
     <div class="grid" id="coloring-grid"></div>
   </section>
 
@@ -312,11 +325,27 @@
       { name: "Pip",   chip: "sky",  img: "assets/char-pip.webp",    blurb: "The little one with green hair and a unicorn bag, learning to be brave." },
       { name: "Tilly", chip: "sun", img: "assets/char-tilly.webp", blurb: "Red curls, bright ideas and a flower on her sweater. Never far from a giggle." }
     ],
+    // tags: lumi, reign, pip, tilly, everyone, halloween. A page can carry several.
     coloringPages: [
-      { title: "Color Lumi",          file: "assets/coloring-lumi.pdf",   preview: "assets/coloring-lumi.webp",   note: "Lumi dancing with her bunny and kitten friends." },
-      { title: "Color Reign",         file: "assets/coloring-reign.pdf",  preview: "assets/coloring-reign.webp",  note: "Reign, music, and a peace sign." },
-      { title: "Color Pip",           file: "assets/coloring-pip.pdf",    preview: "assets/coloring-pip.webp",    note: "Pip in the autumn woods with a squirrel." },
-      { title: "Color Tilly",         file: "assets/coloring-tilly.pdf",  preview: "assets/coloring-tilly.webp",  note: "Tilly in the garden with butterflies." }
+      { title: "Lumi in the garden",     file: "assets/coloring-lumi.pdf",             preview: "assets/coloring-lumi.webp",             tags: ["lumi"],               note: "Dancing with her bunny and kitten friends." },
+      { title: "Lumi the fairy",         file: "assets/coloring-lumi-fairy.pdf",       preview: "assets/coloring-lumi-fairy.webp",       tags: ["lumi", "halloween"],  note: "Petal dress, wings and two tiny fairy helpers." },
+      { title: "Reign rocks out",        file: "assets/coloring-reign.pdf",            preview: "assets/coloring-reign.webp",            tags: ["reign"],              note: "Music notes, a boombox and a peace sign." },
+      { title: "Reign the witch",        file: "assets/coloring-reign-witch.pdf",      preview: "assets/coloring-reign-witch.webp",      tags: ["reign", "halloween"], note: "Big hat, star wand and a bubbling cauldron." },
+      { title: "Pip in the woods",       file: "assets/coloring-pip.pdf",              preview: "assets/coloring-pip.webp",              tags: ["pip"],                note: "Autumn leaves, acorns and a squirrel friend." },
+      { title: "Pip and the unicorn",    file: "assets/coloring-pip-unicorn.pdf",      preview: "assets/coloring-pip-unicorn.webp",      tags: ["pip"],                note: "Best friends under a rainbow." },
+      { title: "Pip the mummy",          file: "assets/coloring-pip-mummy.pdf",        preview: "assets/coloring-pip-mummy.webp",        tags: ["pip", "halloween"],   note: "Wrapped up with friendly ghosts and a mummy kitten." },
+      { title: "Tilly in the garden",    file: "assets/coloring-tilly.pdf",            preview: "assets/coloring-tilly.webp",            tags: ["tilly"],              note: "Butterflies, a birdhouse and a happy bunny." },
+      { title: "Tilly the vampire",      file: "assets/coloring-tilly-vampire.pdf",    preview: "assets/coloring-tilly-vampire.webp",    tags: ["tilly", "halloween"], note: "Bat wings, cute bats and smiling pumpkins." },
+      { title: "All friends together",   file: "assets/coloring-friends-together.pdf", preview: "assets/coloring-friends-together.webp", tags: ["everyone", "lumi", "reign", "pip", "tilly"], note: "Lumi, Reign, Pip and Tilly under the big logo." }
+    ],
+    coloringFilters: [
+      { id: "all",       label: "All pages" },
+      { id: "lumi",      label: "Lumi" },
+      { id: "reign",     label: "Reign" },
+      { id: "pip",       label: "Pip" },
+      { id: "tilly",     label: "Tilly" },
+      { id: "everyone",  label: "Everyone together" },
+      { id: "halloween", label: "Halloween", cls: "spooky" }
     ],
     // Replace each url with the real video link (https://www.youtube.com/watch?v=...).
     episodes: [
@@ -343,15 +372,32 @@
       <p>${esc(f.blurb)}</p>
     </article>`).join("");
 
+  const TAG_LABEL = { lumi: "Lumi", reign: "Reign", pip: "Pip", tilly: "Tilly", everyone: "Everyone", halloween: "Halloween" };
+  const TAG_CLS = { lumi: "lav", reign: "pink", pip: "sky", tilly: "sun", everyone: "mint", halloween: "spooky" };
   document.getElementById("coloring-grid").innerHTML = SITE.coloringPages.map(p => `
-    <article class="card">
+    <article class="card" data-tags="${esc(p.tags.join(" "))}">
       <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} coloring page preview" loading="lazy"></div>
       <div class="card-body">
+        <div class="tags">${(p.tags.includes("everyone") ? ["everyone"].concat(p.tags.filter(t => t === "halloween")) : p.tags).map(t => `<span class="chip ${TAG_CLS[t] || ""}">${esc(TAG_LABEL[t] || t)}</span>`).join("")}</div>
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.note)}</p>
         <a class="btn btn-pink" href="${esc(p.file)}" target="_blank" rel="noopener">Open PDF</a>
       </div>
     </article>`).join("");
+
+  const filterBar = document.getElementById("coloring-filters");
+  const cards = [...document.querySelectorAll("#coloring-grid .card")];
+  const countFor = id => id === "all" ? cards.length : cards.filter(c => c.dataset.tags.split(" ").includes(id)).length;
+  filterBar.innerHTML = SITE.coloringFilters.map(f => `
+    <button type="button" id="filter-${esc(f.id)}" class="${esc(f.cls || "")}" data-filter="${esc(f.id)}" aria-pressed="${f.id === "all"}">${esc(f.label)}<span class="n">${countFor(f.id)}</span></button>`).join("");
+  function applyFilter(id) {
+    cards.forEach(c => { c.hidden = !(id === "all" || c.dataset.tags.split(" ").includes(id)); });
+    filterBar.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === id)));
+  }
+  filterBar.addEventListener("click", ev => { const b = ev.target.closest("button[data-filter]"); if (b) applyFilter(b.dataset.filter); });
+  // Deep links: #lumi, #halloween, #everyone open the shelf pre-filtered.
+  const h = (location.hash || "").replace("#", "");
+  if (SITE.coloringFilters.some(f => f.id === h && h !== "all")) { applyFilter(h); document.getElementById("coloring").scrollIntoView(); }
 
   document.getElementById("episode-list").innerHTML = SITE.episodes.map(e => `
     <a class="ep" href="${esc(e.url)}" target="_blank" rel="noopener">
