@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://danielosh29.github.io/lumi-world/sitemap.xml
