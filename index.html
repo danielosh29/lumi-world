@@ -168,6 +168,10 @@
   .profile-body blockquote { margin: 8px 0 0; padding: 18px 22px; border-radius: 20px; background: linear-gradient(100deg, var(--pink), var(--sun) 35%, var(--sky) 68%, var(--lav)); color: #2d1358; font-family: var(--display); font-weight: 600; font-size: 1.25rem; display: grid; gap: 6px; }
   .profile-body blockquote small { font-family: var(--body); font-weight: 700; font-size: .9rem; opacity: .85; }
   .profile-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  .moods { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; }
+  .moods img { height: 86px; width: auto; transition: transform .2s ease; }
+  .moods img:hover { transform: scale(1.12) rotate(-3deg); }
+  @media (prefers-reduced-motion: reduce) { .moods img { transition: none; } .moods img:hover { transform: none; } }
   .bubbles { display: flex; flex-wrap: wrap; gap: 8px; }
   .bub { font-family: var(--display); font-weight: 600; font-size: .95rem; padding: 8px 16px; border-radius: 999px; color: #2d1358; box-shadow: inset 0 -3px 0 rgba(0,0,0,.08), 0 3px 0 rgba(0,0,0,.06); transform: rotate(var(--r, 0deg)); }
   .bub.c0 { background: var(--lav); --r: -1.5deg; } .bub.c1 { background: var(--sun); --r: 1deg; } .bub.c2 { background: var(--pink); --r: -0.5deg; } .bub.c3 { background: var(--sky); --r: 1.5deg; } .bub.c4 { background: var(--mint); --r: -1deg; }
@@ -413,6 +417,7 @@
     subscribers: "Over 3,000",
     friends: [
       { id: "lumi", name: "Lumi", chip: "lav", img: "assets/lumi-stand.webp", alt: "assets/lumi-sit.webp", coloring: "lumi",
+        moods: ["01","02","04","07","10","12"],
         bubbles: ["9 years old", "Gentle heart", "Curious mind", "Quiet courage", "Pip's big sister", "Loves lavender", "Finds the good in everything"],
         blurb: "Kind, thoughtful, gentle and curious. Finds the good in every situation.",
         age: "9 years old", personality: "Kind, thoughtful, gentle & curious", sparkle: "Finding the good in every situation",
@@ -435,6 +440,7 @@
         tagline: "A gentle heart. A curious mind. A little everyday magic. That's Lumi!"
       },
       { id: "reign", name: "Reign", chip: "pink", img: "assets/reign-tongue.webp", alt: "assets/reign-sit.webp", coloring: "reign",
+        moods: ["01","03","04","09","10","11"],
         bubbles: ["Magical girl", "Arrives in a glitter cloud", "Loves riddles", "Playful & mysterious", "\"Where's the fun in that?!\"", "Every color of the rainbow"],
         blurb: "Playful, adventurous and full of surprises. Arrives in a cloud of glitter.",
         age: "", personality: "Playful, adventurous, imaginative & full of surprises", sparkle: "Turning everyday moments into magical adventures",
@@ -482,6 +488,7 @@
         tagline: "A little explorer. A million questions. A heart full of wonder. That's Pip!"
       },
       { id: "tilly", name: "Tilly", chip: "sun", img: "assets/tilly-hands.webp", alt: "assets/tilly-sit.webp", coloring: "tilly",
+        moods: ["01","02","03","04","06","09"],
         bubbles: ["Lumi's best friend", "Big orange curls", "Natural entertainer", "\"WAIT... WHAT?!\"", "Joke Time host", "Big feelings, bigger heart"],
         blurb: "Lumi's best friend. Funny, expressive, theatrical. \"WAIT... WHAT?!\"",
         age: "", personality: "Funny, expressive, energetic, theatrical & imaginative", sparkle: "Turning everyday surprises into unforgettable funny moments",
@@ -541,6 +548,8 @@
       { title: "Party invitation",       file: "assets/print/party-invitation.pdf",       preview: "assets/print/party-invitation.webp",       tags: ["party"], pages: "1 page",   note: "Five by seven inches, fill in by hand. Fits a standard envelope." },
       { title: "Name tags",              file: "assets/print/name-tags.pdf",              preview: "assets/print/name-tags.webp",              tags: ["party"], pages: "1 page",   note: "Eight tags, two of each friend." },
       { title: "Birthday crown",         file: "assets/print/birthday-crown.pdf",         preview: "assets/print/birthday-crown.webp",         tags: ["party"], pages: "1 page",   note: "Two halves to tape together. Best on card stock." },
+      { title: "How do I feel today?",  file: "assets/print/feelings-chart.pdf",   preview: "assets/print/feelings-chart.webp",   tags: ["everyday"], pages: "1 page",  note: "Twelve feelings with Lumi, Reign and Tilly. Point, color, or stick." },
+      { title: "Sticker sheets",        file: "assets/print/sticker-sheets.pdf",   preview: "assets/print/sticker-sheets.webp",   tags: ["everyday"], pages: "3 pages", note: "Lumi, Reign and Tilly. Print on sticker paper and cut around the white edges." },
       { title: "Certificate of Friendship", file: "assets/print/friendship-certificate.pdf", preview: "assets/print/friendship-certificate.webp", tags: ["everyday"], pages: "1 page", note: "Official friend of Lumi, Pip, Reign and Tilly. Add a name and date." }
     ],
     printFilters: [
@@ -614,6 +623,7 @@
         </div>
       </div>
       <blockquote>"${esc(f.reminder)}"<small>${esc(f.tagline)}</small></blockquote>
+      ${f.moods ? `<div class="moods" aria-label="${esc(f.name)} in different moods">${f.moods.map(n => `<img src="assets/stickers/${esc(f.id)}-${n}.webp" alt="" loading="lazy">`).join("")}</div>` : ""}
       <details class="more">
         <summary>More about ${esc(f.name)}</summary>
         <div class="more-body">
