@@ -102,6 +102,16 @@
   /* hero */
   .hero { position: relative; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))) calc(-1 * max(16px, env(safe-area-inset-right, 0px))); }
   .hero-img { display: block; width: 100%; height: auto; max-height: 560px; object-fit: cover; object-position: center; }
+  .hero-media { position: relative; max-height: 560px; overflow: hidden; }
+  .hero-media video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; max-height: 560px; object-fit: cover; object-position: center; }
+  @media (prefers-reduced-motion: reduce) { .hero-media video { display: none; } .hero-media .hero-img { display: block; } }
+  .hero-media:has(video) .hero-img { display: none; }
+  @media (prefers-reduced-motion: reduce) { .hero-media:has(video) .hero-img { display: block; } }
+  /* subscribe band */
+  .band { position: relative; border-radius: 30px; overflow: hidden; box-shadow: var(--shadow); margin-top: 32px; }
+  .band video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+  .band .band-cta { position: absolute; inset: auto 0 0 0; padding: 18px 20px; display: flex; gap: 12px; align-items: center; justify-content: center; flex-wrap: wrap; background: linear-gradient(180deg, rgba(58,39,99,0), rgba(58,39,99,.55)); }
+  @media (max-width: 600px) { .band .band-cta { position: static; background: var(--paper); } }
   .hero-card {
     position: relative; margin: -56px auto 0; max-width: 980px; width: calc(100% - 32px);
     background: var(--paper); border-radius: 32px; box-shadow: var(--shadow); padding: 32px;
@@ -208,7 +218,12 @@
 </div>
 
 <header class="hero" id="top">
-  <img class="hero-img" src="assets/hero-title.webp" alt="Lumi and the Magical World: a sunny village street with the series logo" width="1600" height="900">
+  <div class="hero-media">
+    <video autoplay muted loop playsinline preload="metadata" poster="assets/hero-title.webp" aria-hidden="true">
+      <source src="assets/hero-loop.mp4" type="video/mp4">
+    </video>
+    <img class="hero-img" src="assets/hero-title.webp" alt="Lumi and the Magical World: a sunny village street with the series logo" width="1600" height="900">
+  </div>
   <div class="hero-card">
     <div class="hero-copy">
       <span class="eyebrow">Free coloring pages &amp; every episode</span>
@@ -257,6 +272,14 @@
       <p>Each episode runs fifteen to twenty minutes and follows one adventure. All episodes play on YouTube.</p>
     </div>
     <div class="episodes" id="episode-list"></div>
+    <div class="band">
+      <video autoplay muted loop playsinline preload="metadata" poster="assets/og-image.jpg" aria-hidden="true">
+        <source src="assets/subscribe-loop.mp4" type="video/mp4">
+      </video>
+      <div class="band-cta">
+        <a class="btn btn-sun" id="yt-band" href="#" target="_blank" rel="noopener">Subscribe on YouTube</a>
+      </div>
+    </div>
   </section>
 
   <section id="parents">
@@ -360,6 +383,7 @@
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   document.getElementById("yt-hero").href = SITE.channelUrl;
+  document.getElementById("yt-band").href = SITE.channelUrl + "?sub_confirmation=1";
   document.getElementById("sub-count").textContent = SITE.subscribers;
   document.getElementById("contact-email").textContent = SITE.contactEmail;
   document.getElementById("year").textContent = new Date().getFullYear();
