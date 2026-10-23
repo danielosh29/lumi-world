@@ -65,14 +65,17 @@
   a { color: inherit; }
   :focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
 
-  /* bubble lettering */
-  .bubble {
-    font-family: var(--display); font-weight: 700; letter-spacing: .01em;
-    background: linear-gradient(100deg, var(--pink) 0%, var(--sun) 35%, var(--sky) 68%, var(--lav) 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent;
-    filter: drop-shadow(0 2px 0 var(--gold)) drop-shadow(0 4px 10px rgba(240, 180, 55, .35));
-    width: fit-content; max-width: 100%;
-  }
+  /* bubble lettering: each letter gets its own pastel fill, white gloss and gold rim */
+  .bubble { font-family: var(--display); font-weight: 700; letter-spacing: .02em; width: fit-content; max-width: 100%;
+    filter: drop-shadow(0 0 1.5px var(--gold)) drop-shadow(0 0 1.5px var(--gold)) drop-shadow(0 .06em 0 #d79a2b) drop-shadow(0 .12em .2em rgba(240, 180, 55, .3)); }
+  .bubble .L { display: inline-block; color: transparent; -webkit-background-clip: text; background-clip: text;
+    background-image: linear-gradient(180deg, #fff 0%, var(--c) 30%, var(--c) 66%, var(--d) 100%); transform: rotate(var(--r, 0deg)); }
+  .bubble .L.c0 { --c: #ff9ad5; --d: #e46fb5; --r: -1.5deg; }
+  .bubble .L.c1 { --c: #ffd45e; --d: #f0b437; --r: 1deg; }
+  .bubble .L.c2 { --c: #8ad9f7; --d: #5fbde6; --r: -.8deg; }
+  .bubble .L.c3 { --c: #c6a6f7; --d: #a07de6; --r: 1.4deg; }
+  .bubble .S { display: inline-block; width: .3em; }
+  @media (prefers-reduced-motion: reduce) { .bubble .L { transform: none; } }
   .eyebrow { font-family: var(--display); font-weight: 600; font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
   section { padding-block: 60px 20px; }
   .section-head { display: grid; gap: 8px; margin-bottom: 28px; }
@@ -259,7 +262,6 @@
     <ul>
       <li><a href="#friends">Friends</a></li>
       <li><a href="#coloring">Coloring pages</a></li>
-      <li><a href="#printables">Party &amp; printables</a></li>
       <li><a href="#episodes">Episodes</a></li>
       <li><a href="#parents">For parents</a></li>
     </ul>
@@ -316,7 +318,7 @@
     <div class="grid" id="coloring-grid"></div>
   </section>
 
-  <section id="printables">
+  <section id="printables" hidden>
     <div class="section-head">
       <span class="eyebrow">Print, cut &amp; celebrate</span>
       <h2 class="bubble">Party kit &amp; printables</h2>
@@ -563,6 +565,18 @@
   };
   // ------------------------------------------------------------------------------
 
+  // Bubble lettering: wrap every letter of a .bubble element in its own colored span.
+  function bubblify(root) {
+    (root || document).querySelectorAll(".bubble:not([data-bub])").forEach(el => {
+      const text = el.textContent; el.textContent = ""; el.dataset.bub = "1";
+      let i = 0;
+      for (const ch of text) {
+        if (ch === " ") { const s = document.createElement("span"); s.className = "S"; s.textContent = " "; el.appendChild(s); continue; }
+        const s = document.createElement("span"); s.className = "L c" + (i++ % 4); s.textContent = ch; el.appendChild(s);
+      }
+    });
+  }
+  bubblify();
   const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   document.getElementById("yt-hero").href = SITE.channelUrl;
@@ -616,6 +630,7 @@
       <div class="profile-actions">
         <a class="btn btn-pink" href="#${esc(f.coloring)}" data-close>Color ${esc(f.name)}</a>
       </div>`;
+    bubblify(dlg);
     dlg.showModal();
   }
   document.getElementById("friend-grid").addEventListener("click", ev => { const b = ev.target.closest(".meet-btn"); if (b) openProfile(b.dataset.friend); });
