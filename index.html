@@ -1,0 +1,361 @@
+<title>Lumi and the Magical World</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+  /* Layout: the series title card opens the page edge to edge, a white welcome card overlaps it,
+     then four sections stacked on a pale lavender ground: friends, coloring shelf, episodes, parents.
+     Headings use the channel's bubble lettering look (rounded Fredoka, pastel gradient, gold rim). */
+  :root {
+    --bg: #f7f2ff;
+    --paper: #ffffff;
+    --ink: #3a2763;
+    --muted: #7b6b9c;
+    --line: #e6dcf7;
+    --pink: #ff9ad5;
+    --sun: #ffd45e;
+    --sky: #8ad9f7;
+    --lav: #c6a6f7;
+    --gold: #f0b437;
+    --mint: #9fe3c0;
+    --mint-ink: #0f4a2e;
+    --shadow: 0 12px 32px rgba(72, 44, 130, .12);
+    --display: "Fredoka", "Trebuchet MS", "Segoe UI", sans-serif;
+    --body: "Nunito", "Segoe UI", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a1538; --paper: #272058; --ink: #f6f1ff; --muted: #bdb2e3; --line: #3a3170;
+      --gold: #ffc857; --mint-ink: #083322; --shadow: 0 12px 32px rgba(0, 0, 0, .4); color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a1538; --paper: #272058; --ink: #f6f1ff; --muted: #bdb2e3; --line: #3a3170;
+    --gold: #ffc857; --mint-ink: #083322; --shadow: 0 12px 32px rgba(0, 0, 0, .4); color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.55;
+    padding-block: 0 56px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(1.9rem, 4.5vw, 2.8rem); }
+  h3 { font-size: 1.25rem; }
+  p { margin: 0; max-width: 62ch; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
+
+  /* bubble lettering */
+  .bubble {
+    font-family: var(--display); font-weight: 700; letter-spacing: .01em;
+    background: linear-gradient(100deg, var(--pink) 0%, var(--sun) 35%, var(--sky) 68%, var(--lav) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 2px 0 var(--gold)) drop-shadow(0 4px 10px rgba(240, 180, 55, .35));
+    width: fit-content; max-width: 100%;
+  }
+  .eyebrow { font-family: var(--display); font-weight: 600; font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  section { padding-block: 60px 20px; }
+  .section-head { display: grid; gap: 8px; margin-bottom: 28px; }
+  .section-head p { color: var(--muted); font-size: 1.05rem; }
+
+  /* nav */
+  nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; flex-wrap: wrap; }
+  .logo img { height: 46px; width: auto; display: block; }
+  nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 6px 20px; flex-wrap: wrap; font-weight: 800; font-size: .95rem; }
+  nav ul a { text-decoration: none; color: var(--muted); }
+  nav ul a:hover, nav ul a:focus-visible { color: var(--ink); }
+
+  /* buttons */
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
+    font-family: var(--display); font-weight: 600; font-size: 1.05rem;
+    padding: 14px 24px; border-radius: 999px; border: 0; cursor: pointer; transition: transform .15s ease;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-sun { background: linear-gradient(180deg, #ffe08a, var(--sun)); color: #4a3300; box-shadow: 0 6px 0 #e3a92c; }
+  .btn-sun:active { transform: translateY(3px); box-shadow: 0 3px 0 #e3a92c; }
+  .btn-pink { background: linear-gradient(180deg, #ffb9e3, var(--pink)); color: #5c1540; box-shadow: 0 6px 0 #e07cc0; }
+  .btn-pink:active { transform: translateY(3px); box-shadow: 0 3px 0 #e07cc0; }
+  .btn-ghost { background: var(--paper); color: var(--ink); border: 2px solid var(--line); padding: 12px 22px; }
+  .btn svg { width: 22px; height: 22px; flex: none; }
+
+  /* hero */
+  .hero { position: relative; margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px))) calc(-1 * max(16px, env(safe-area-inset-right, 0px))); }
+  .hero-img { display: block; width: 100%; height: auto; max-height: 560px; object-fit: cover; object-position: center; }
+  .hero-card {
+    position: relative; margin: -56px auto 0; max-width: 980px; width: calc(100% - 32px);
+    background: var(--paper); border-radius: 32px; box-shadow: var(--shadow); padding: 32px;
+    display: grid; grid-template-columns: 1.15fr .85fr; gap: 24px; align-items: center;
+  }
+  .hero-copy { display: grid; gap: 18px; min-width: 0; }
+  .hero-copy h1 { font-size: clamp(2rem, 5.5vw, 3.4rem); line-height: 1.05; }
+  .hero-copy p { color: var(--muted); font-size: 1.1rem; }
+  .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+  .stat { font-family: var(--display); color: var(--muted); font-size: .95rem; }
+  .stat b { color: var(--ink); font-weight: 600; }
+  .hero-friends { display: flex; align-items: flex-end; justify-content: center; gap: 0; min-width: 0; }
+  .hero-friends img { height: 280px; width: auto; max-width: 100%; margin-inline: -10px; filter: drop-shadow(0 10px 14px rgba(58, 39, 99, .22)); }
+  .hero-friends img:nth-child(2) { height: 300px; position: relative; z-index: 1; }
+
+  /* friends */
+  .friends { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .friend { background: var(--paper); border-radius: 26px; padding: 18px 18px 22px; box-shadow: var(--shadow); display: grid; gap: 8px; justify-items: center; text-align: center; min-width: 0; }
+  .friend .portrait { height: 240px; display: grid; place-items: end center; width: 100%; overflow: hidden; }
+  .friend .portrait img { height: 230px; width: auto; max-width: 100%; }
+  .friend h3 { font-size: 1.5rem; }
+  .friend p { color: var(--muted); font-size: .95rem; }
+  .chip { font-family: var(--display); font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 12px; }
+  .chip.lav { background: var(--lav); color: #2d1358; }
+  .chip.pink { background: var(--pink); color: #5c1540; }
+  .chip.sky { background: var(--sky); color: #0c3f55; }
+  .chip.sun { background: var(--sun); color: #4a3300; }
+
+  /* coloring shelf */
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
+  .card { background: var(--paper); border-radius: 24px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
+  .card .thumb { margin: 14px; border-radius: 14px; overflow: hidden; border: 1px solid var(--line); background: #fff; }
+  .card .thumb img { display: block; width: 100%; height: auto; }
+  .card-body { padding: 0 18px 20px; display: grid; gap: 10px; }
+  .card-body p { color: var(--muted); font-size: .95rem; }
+  .card .btn { padding: 10px 18px; font-size: .95rem; width: fit-content; }
+
+  /* episodes */
+  .episodes { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+  .ep { background: var(--paper); border-radius: 24px; box-shadow: var(--shadow); overflow: hidden; text-decoration: none; display: flex; flex-direction: column; min-width: 0; transition: transform .15s ease; }
+  .ep:hover { transform: translateY(-3px); }
+  .ep img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+  .ep-body { padding: 14px 18px 18px; display: grid; gap: 4px; }
+  .ep-body .meta { color: var(--muted); font-size: .85rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+  .ep-body p { color: var(--muted); font-size: .95rem; }
+
+  /* parents */
+  .parents { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: start; }
+  .note { background: var(--paper); border-radius: 26px; padding: 28px; box-shadow: var(--shadow); display: grid; gap: 12px; min-width: 0; }
+  .note ul { margin: 0; padding-left: 20px; color: var(--muted); display: grid; gap: 8px; }
+  .note.safe { border: 2px solid var(--mint); box-shadow: none; }
+  .note .email { font-weight: 800; color: var(--ink); user-select: all; }
+
+  /* mailing list */
+  .signup { position: relative; border-radius: 30px; overflow: hidden; background: var(--paper); box-shadow: var(--shadow); }
+  .signup .band { display: block; width: 100%; height: 120px; object-fit: cover; object-position: center top; }
+  .signup-body { padding: 24px 32px 32px; display: grid; gap: 14px; }
+  .signup form { display: grid; gap: 12px; max-width: 520px; }
+  .signup label { font-weight: 800; }
+  .signup input[type="email"] { font: inherit; padding: 13px 16px; border-radius: 14px; border: 2px solid var(--line); background: var(--bg); color: var(--ink); width: 100%; }
+  .consent { display: flex; gap: 10px; align-items: flex-start; color: var(--muted); font-size: .95rem; font-weight: 600; }
+  .consent input { margin-top: 5px; flex: none; }
+  .toast { color: var(--mint-ink); background: var(--mint); border-radius: 12px; padding: 10px 14px; font-weight: 800; }
+  .err { color: #c2185b; font-weight: 800; }
+
+  footer { padding-block: 40px 0; color: var(--muted); font-size: .9rem; display: grid; gap: 8px; justify-items: center; text-align: center; }
+  footer img { height: 40px; width: auto; }
+  footer p { max-width: none; }
+
+  @media (max-width: 820px) {
+    section { padding-block: 44px 12px; }
+    .hero-card { grid-template-columns: 1fr; margin-top: -36px; padding: 24px; }
+    .hero-friends img { height: 200px; }
+    .hero-friends img:nth-child(2) { height: 216px; }
+    .friends { grid-template-columns: repeat(2, 1fr); }
+    .parents { grid-template-columns: 1fr; }
+    .signup-body { padding: 20px 20px 26px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .btn, .ep { transition: none; } .btn:hover, .ep:hover { transform: none; } }
+</style>
+
+<div class="wrap">
+  <nav aria-label="Main">
+    <a class="logo" href="#top" aria-label="Lumi home"><img src="assets/logo.webp" alt="Lumi" width="900" height="300"></a>
+    <ul>
+      <li><a href="#friends">Friends</a></li>
+      <li><a href="#coloring">Coloring pages</a></li>
+      <li><a href="#episodes">Episodes</a></li>
+      <li><a href="#parents">For parents</a></li>
+    </ul>
+  </nav>
+</div>
+
+<header class="hero" id="top">
+  <img class="hero-img" src="assets/hero-title.webp" alt="Lumi and the Magical World: a sunny village street with the series logo" width="1600" height="900">
+  <div class="hero-card">
+    <div class="hero-copy">
+      <span class="eyebrow">Free coloring pages &amp; every episode</span>
+      <h1 class="bubble">Welcome to the Magical World!</h1>
+      <p>An animated series where everyday moments turn into unforgettable adventures. Join Lumi, Pip, Reign and Tilly through mysteries, school days and stories about friendship and family, made for kids aged four to nine.</p>
+      <div class="hero-actions">
+        <a class="btn btn-sun" id="yt-hero" href="#" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.5 12 31 31 0 0 0 23 7.2ZM9.8 15.1V8.9L15.8 12Z"/></svg>
+          Watch on YouTube
+        </a>
+        <a class="btn btn-pink" href="#coloring">Get coloring pages</a>
+      </div>
+      <div class="stat"><b id="sub-count">3,500</b> families already watch along</div>
+    </div>
+    <div class="hero-friends" aria-hidden="true">
+      <img src="assets/char-reign.webp" alt="">
+      <img src="assets/char-lumi.webp" alt="">
+      <img src="assets/char-pip.webp" alt="">
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <section id="friends">
+    <div class="section-head">
+      <span class="eyebrow">Meet the friends</span>
+      <h2 class="bubble">Who lives in the Magical World?</h2>
+    </div>
+    <div class="friends" id="friend-grid"></div>
+  </section>
+
+  <section id="coloring">
+    <div class="section-head">
+      <span class="eyebrow">Print &amp; color</span>
+      <h2 class="bubble">Coloring pages</h2>
+      <p>Letter-size PDFs, ready to print at home or in class. New pages arrive with each episode.</p>
+    </div>
+    <div class="grid" id="coloring-grid"></div>
+  </section>
+
+  <section id="episodes">
+    <div class="section-head">
+      <span class="eyebrow">Season one</span>
+      <h2 class="bubble">Watch the episodes</h2>
+      <p>Each episode runs fifteen to twenty minutes and follows one adventure. All episodes play on YouTube.</p>
+    </div>
+    <div class="episodes" id="episode-list"></div>
+  </section>
+
+  <section id="parents">
+    <div class="section-head">
+      <span class="eyebrow">For grown-ups</span>
+      <h2 class="bubble">What the series is about</h2>
+    </div>
+    <div class="parents">
+      <div class="note">
+        <h3>Everyday moments, magical lessons</h3>
+        <ul>
+          <li>One clear idea per episode: being brave, sharing, kindness, curiosity.</li>
+          <li>Recurring characters kids grow with: Lumi, Pip, Reign and Tilly.</li>
+          <li>Original stories, music and visuals, made with care for ages four to nine.</li>
+          <li>Coloring pages match the episodes, so the story continues off-screen.</li>
+        </ul>
+      </div>
+      <div class="note safe">
+        <h3>Safe by design</h3>
+        <ul>
+          <li>This site collects nothing from children: no accounts, no comments, no tracking ads.</li>
+          <li>Coloring pages are plain PDF files, free, no sign-up needed.</li>
+          <li>The mailing list is for parents only and asks for consent before joining.</li>
+          <li>Questions? Write to <span class="email" id="contact-email">lumipipworld@gmail.com</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section id="news">
+    <div class="signup">
+      <img class="band" src="assets/clouds-strip.webp" alt="" width="1600" height="287">
+      <div class="signup-body">
+        <span class="eyebrow">Parents' list</span>
+        <h2 class="bubble">New pages and episodes by email</h2>
+        <p style="color:var(--muted)">One short email when a new episode or coloring pack is out. Nothing else.</p>
+        <form id="signup-form" novalidate>
+          <label for="parent-email">Your email</label>
+          <input type="email" id="parent-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <label class="consent"><input type="checkbox" id="parent-consent" required> I am a parent or guardian, eighteen or older, and I agree to receive emails about Lumi and the Magical World.</label>
+          <div><button class="btn btn-sun" type="submit">Join the list</button></div>
+          <div id="signup-msg" hidden></div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <img src="assets/logo.webp" alt="Lumi">
+    <p><b>Lumi and the Magical World</b> · story, visuals &amp; music by Danielle Iv · © <span id="year"></span> All rights reserved.</p>
+    <p>Lumi, Pip, Reign, Tilly and all artwork are original characters. Coloring pages are free for personal, classroom and home use.</p>
+  </footer>
+</div>
+
+<script>
+  // ---------- Site content: edit this block, nothing else needs to change ----------
+  const SITE = {
+    channelUrl: "https://www.youtube.com/@lumiandthemagicalworld",
+    videosUrl: "https://www.youtube.com/@lumiandthemagicalworld/videos",
+    contactEmail: "lumipipworld@gmail.com",
+    subscribers: "3,500",
+    friends: [
+      { name: "Lumi",  chip: "lav",  img: "assets/char-lumi.webp",   blurb: "Lavender hair, big blue eyes and a heart full of dreams. Tiny brave, every day." },
+      { name: "Reign", chip: "pink", img: "assets/char-reign.webp",  blurb: "Curly hair, giant smile, first to say yes to an adventure." },
+      { name: "Pip",   chip: "sky",  img: "assets/char-pip.webp",    blurb: "The little one with green hair and a unicorn bag, learning to be brave." },
+      { name: "Tilly", chip: "sun", img: "assets/char-tilly.webp", blurb: "Red curls, bright ideas and a flower on her sweater. Never far from a giggle." }
+    ],
+    coloringPages: [
+      { title: "Color Lumi",          file: "assets/coloring-lumi.pdf",   preview: "assets/coloring-lumi.webp",   note: "Lumi in her butterfly jeans." },
+      { title: "Color Reign",         file: "assets/coloring-reign.pdf",  preview: "assets/coloring-reign.webp",  note: "Reign with her star bag." },
+      { title: "Color Pip",           file: "assets/coloring-pip.pdf",    preview: "assets/coloring-pip.webp",    note: "Pip and his unicorn jacket." },
+      { title: "Color Tilly",         file: "assets/coloring-tilly.pdf",  preview: "assets/coloring-tilly.webp",  note: "Flower sweater and star shoes." }
+    ],
+    // Replace each url with the real video link (https://www.youtube.com/watch?v=...).
+    episodes: [
+      { label: "Episode 2", title: "Midnight Mystery",  sub: "Pip learns to be brave", img: "assets/ep2-midnight.webp", url: "https://www.youtube.com/@lumiandthemagicalworld/videos" },
+      { label: "Episode 3", title: "Dinosaur Land!",    sub: "A roaring adventure",    img: "assets/ep3-dinosaur.webp", url: "https://www.youtube.com/@lumiandthemagicalworld/videos" },
+      { label: "Episode 4", title: "The Lost Unicorn",  sub: "Friends find the way",   img: "assets/ep4-unicorn.webp",  url: "https://www.youtube.com/@lumiandthemagicalworld/videos" },
+      { label: "Episode",   title: "No More Colors?!",  sub: "When the colors vanish", img: "assets/ep-colors.webp",    url: "https://www.youtube.com/@lumiandthemagicalworld/videos" }
+    ]
+  };
+  // ------------------------------------------------------------------------------
+
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  document.getElementById("yt-hero").href = SITE.channelUrl;
+  document.getElementById("sub-count").textContent = SITE.subscribers;
+  document.getElementById("contact-email").textContent = SITE.contactEmail;
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  document.getElementById("friend-grid").innerHTML = SITE.friends.map(f => `
+    <article class="friend">
+      <div class="portrait"><img src="${esc(f.img)}" alt="${esc(f.name)}"></div>
+      <span class="chip ${esc(f.chip)}">${esc(f.name)}</span>
+      <h3>${esc(f.name)}</h3>
+      <p>${esc(f.blurb)}</p>
+    </article>`).join("");
+
+  document.getElementById("coloring-grid").innerHTML = SITE.coloringPages.map(p => `
+    <article class="card">
+      <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} coloring page preview" loading="lazy"></div>
+      <div class="card-body">
+        <h3>${esc(p.title)}</h3>
+        <p>${esc(p.note)}</p>
+        <a class="btn btn-pink" href="${esc(p.file)}" target="_blank" rel="noopener">Open PDF</a>
+      </div>
+    </article>`).join("");
+
+  document.getElementById("episode-list").innerHTML = SITE.episodes.map(e => `
+    <a class="ep" href="${esc(e.url)}" target="_blank" rel="noopener">
+      <img src="${esc(e.img)}" alt="${esc(e.title)} thumbnail" loading="lazy">
+      <div class="ep-body">
+        <span class="meta">${esc(e.label)}</span>
+        <h3>${esc(e.title)}</h3>
+        <p>${esc(e.sub)} · Watch on YouTube →</p>
+      </div>
+    </a>`).join("");
+
+  // Mailing list: wire this to your email service (the form posts nowhere yet).
+  document.getElementById("signup-form").addEventListener("submit", ev => {
+    ev.preventDefault();
+    const email = document.getElementById("parent-email").value.trim();
+    const consent = document.getElementById("parent-consent").checked;
+    const msg = document.getElementById("signup-msg");
+    msg.hidden = false;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.className = "err"; msg.textContent = "Please enter a valid email address."; return; }
+    if (!consent) { msg.className = "err"; msg.textContent = "Please confirm you are a parent or guardian."; return; }
+    msg.className = "toast"; msg.textContent = "Thanks! You're on the list.";
+    ev.target.reset();
+  });
+</script>
