@@ -395,7 +395,28 @@
         tagline: "A gentle heart. A curious mind. A little everyday magic. That's Lumi!"
       },
       { id: "reign", name: "Reign", chip: "pink", img: "assets/char-reign.webp", coloring: "reign",
-        blurb: "Curly hair, giant smile, first to say yes to an adventure." },
+        blurb: "Playful, adventurous and full of surprises. Arrives in a cloud of glitter.",
+        age: "", personality: "Playful, adventurous, imaginative & full of surprises", sparkle: "Turning everyday moments into magical adventures",
+        about: [
+          "POOF! Did somebody say magic? Reign is a cheerful, curly-haired magical girl who appears in a swirl of glitter whenever something exciting is about to happen. She usually knows a little more than she lets on. Could she have taken everyone home with a wave of her hand? Probably! So why didn't she? \"Where's the fun in that?!\" Beneath the mischief is a kind friend who loves watching her friends laugh, discover, and find out they can do more than they imagined."
+        ],
+        special: [
+          ["Magical imagination", "Sees extraordinary possibilities in ordinary places."],
+          ["Playful humor", "Silly jokes, friendly teasing and unexpected surprises."],
+          ["A little mystery", "Never reveals everything at once. Discovering is half the fun."],
+          ["Caring heart", "Even when she's mischievous, she truly cares."]
+        ],
+        favorites: [
+          ["Colors", "Pink, purple, and every color of the rainbow!"],
+          ["Activity", "Planning magical adventures and surprising her friends."],
+          ["Games", "Riddles, guessing games and magical mysteries."],
+          ["Signature entrance", "A colorful cloud of glitter and sparkles!"]
+        ],
+        learn: "Creative thinking, curiosity, adaptability and confidence. Not everything goes to plan, and sometimes that's where the adventure begins.",
+        extra: ["Reign's Riddle Time!", "Reign turns questions into little mysteries: listen carefully, look for clues, use your imagination and guess. Wrong answer? She'll happily cheer you on to try again."],
+        reminder: "Not every surprise needs a shortcut. Sometimes the adventure is the best part!",
+        tagline: "A colorful cloud of sparkles. A heart full of kindness. A million magical surprises. That's Reign!"
+      },
       { id: "pip", name: "Pip", chip: "sky", img: "assets/char-pip.webp", coloring: "pip",
         blurb: "Lumi's little brother. Sweet, curious, and full of approximately a million questions.",
         age: "7 years old", personality: "Sweet, curious, gentle & wonderfully innocent", sparkle: "Seeing the extraordinary in ordinary things",
@@ -485,7 +506,7 @@
           <span class="eyebrow">Meet</span>
           <h2 class="bubble">${esc(f.name)}</h2>
           <div class="facts">
-            <div><b>Age</b><span>${esc(f.age)}</span></div>
+            ${f.age ? `<div><b>Age</b><span>${esc(f.age)}</span></div>` : ""}
             <div><b>Personality</b><span>${esc(f.personality)}</span></div>
             <div><b>Special sparkle</b><span>${esc(f.sparkle)}</span></div>
           </div>
