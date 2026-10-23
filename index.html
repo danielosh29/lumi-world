@@ -65,15 +65,18 @@
   a { color: inherit; }
   :focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
 
-  /* bubble lettering: the Pastel Bubble color font, drawn letter by letter from glyph images
-     (color fonts don't render in every browser, images do) */
-  .bubble { font-family: var(--display); font-weight: 700; width: fit-content; max-width: 100%; line-height: 1.15;
-    filter: drop-shadow(0 .05em .12em rgba(240, 180, 55, .35)); }
-  .bubble .L { display: inline-block; height: 1em; width: auto; vertical-align: -0.16em; margin-right: -0.05em; max-width: none; }
-  .bubble .L.P { height: .92em; margin-left: .04em; vertical-align: -0.18em; }
+  /* bubble lettering: each letter gets its own pastel fill, white gloss and gold rim */
+  .bubble { font-family: var(--display); font-weight: 700; letter-spacing: .02em; width: fit-content; max-width: 100%; line-height: 1.15;
+    filter: drop-shadow(0 0 1.5px var(--gold)) drop-shadow(0 0 1.5px var(--gold)) drop-shadow(0 .06em 0 #d79a2b) drop-shadow(0 .12em .2em rgba(240, 180, 55, .3)); }
   .bubble .W { display: inline-block; white-space: nowrap; }
-  .bubble .S { display: inline-block; width: .32em; }
-  .bubble .T { opacity: 0; position: absolute; pointer-events: none; }
+  .bubble .L { display: inline-block; color: transparent; -webkit-background-clip: text; background-clip: text;
+    background-image: linear-gradient(180deg, #fff 0%, var(--c) 30%, var(--c) 66%, var(--d) 100%); transform: rotate(var(--r, 0deg)); }
+  .bubble .L.c0 { --c: #ff9ad5; --d: #e46fb5; --r: -1.5deg; }
+  .bubble .L.c1 { --c: #ffd45e; --d: #f0b437; --r: 1deg; }
+  .bubble .L.c2 { --c: #8ad9f7; --d: #5fbde6; --r: -.8deg; }
+  .bubble .L.c3 { --c: #c6a6f7; --d: #a07de6; --r: 1.4deg; }
+  .bubble .S { display: inline-block; width: .3em; }
+  @media (prefers-reduced-motion: reduce) { .bubble .L { transform: none; } }
   .eyebrow { font-family: var(--display); font-weight: 600; font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
   section { padding-block: 60px 20px; }
   .section-head { display: grid; gap: 8px; margin-bottom: 28px; }
@@ -132,13 +135,11 @@
   /* friends */
   .friends { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
   .friend { background: var(--paper); border-radius: 26px; padding: 18px 18px 22px; box-shadow: var(--shadow); display: grid; gap: 8px; justify-items: center; text-align: center; min-width: 0; }
-  .friend .portrait { height: 240px; display: grid; place-items: end center; width: 100%; overflow: hidden; }
-  .friend .portrait { position: relative; }
-  .friend .portrait img { height: 230px; width: auto; max-width: 100%; transition: opacity .25s ease; }
-  .friend .portrait .pose-b { position: absolute; inset: auto 0 0 0; margin: 0 auto; height: 170px; opacity: 0; }
-  .friend:hover .portrait .pose-a, .friend:focus-within .portrait .pose-a { opacity: 0; }
-  .friend:hover .portrait .pose-b, .friend:focus-within .portrait .pose-b { opacity: 1; }
-  @media (prefers-reduced-motion: reduce) { .friend .portrait img { transition: none; } }
+  .friend .portrait { position: relative; width: 100%; aspect-ratio: 9 / 13; max-height: 300px; border-radius: 18px; overflow: hidden; background: #fff; }
+  .friend .portrait video, .friend .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
+  .friend .portrait video { display: block; }
+  @media (prefers-reduced-motion: reduce) { .friend .portrait video { display: none; } }
+  .friend .portrait:not(:has(video)) img { position: static; height: 230px; width: auto; object-fit: contain; }
   .friend h3 { font-size: 1.5rem; }
   .friend p { color: var(--muted); font-size: .95rem; }
   .chip { font-family: var(--display); font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 12px; }
@@ -444,6 +445,7 @@
     subscribers: "Over 3,000",
     friends: [
       { id: "lumi", name: "Lumi", chip: "lav", img: "assets/lumi-stand.webp", alt: "assets/lumi-sit.webp", coloring: "lumi",
+        video: "assets/lumi-loop.mp4", poster: "assets/lumi-poster.webp",
         moods: ["01","02","04","07","10","12"],
         bubbles: ["9 years old", "Gentle heart", "Curious mind", "Quiet courage", "Pip's big sister", "Loves lavender", "Finds the good in everything"],
         blurb: "Kind, thoughtful, gentle and curious. Finds the good in every situation.",
@@ -467,6 +469,7 @@
         tagline: "A gentle heart. A curious mind. A little everyday magic. That's Lumi!"
       },
       { id: "reign", name: "Reign", chip: "pink", img: "assets/reign-tongue.webp", alt: "assets/reign-sit.webp", coloring: "reign",
+        video: "assets/reign-loop.mp4", poster: "assets/reign-poster.webp",
         moods: ["01","03","04","09","10","11"],
         bubbles: ["Magical girl", "Arrives in a glitter cloud", "Loves riddles", "Playful & mysterious", "\"Where's the fun in that?!\"", "Every color of the rainbow"],
         blurb: "Playful, adventurous and full of surprises. Arrives in a cloud of glitter.",
@@ -492,6 +495,7 @@
         tagline: "A colorful cloud of sparkles. A heart full of kindness. A million magical surprises. That's Reign!"
       },
       { id: "pip", name: "Pip", chip: "sky", img: "assets/pip-stand.webp", alt: "assets/pip-sit.webp", coloring: "pip",
+        video: "assets/pip-loop.mp4", poster: "assets/pip-poster.webp",
         moods: ["01","02","03","04","05","09"],
         bubbles: ["7 years old", "Lumi's little brother", "A million questions", "\"But why?\"", "Loves dinosaurs & unicorns", "Brave in little steps", "Mint green fan"],
         blurb: "Lumi's little brother. Sweet, curious, and full of approximately a million questions.",
@@ -516,6 +520,7 @@
         tagline: "A little explorer. A million questions. A heart full of wonder. That's Pip!"
       },
       { id: "tilly", name: "Tilly", chip: "sun", img: "assets/tilly-hands.webp", alt: "assets/tilly-sit.webp", coloring: "tilly",
+        video: "assets/tilly-loop.mp4", poster: "assets/tilly-poster.webp",
         moods: ["01","02","03","04","06","09"],
         bubbles: ["Lumi's best friend", "Big orange curls", "Natural entertainer", "\"WAIT... WHAT?!\"", "Joke Time host", "Big feelings, bigger heart"],
         blurb: "Lumi's best friend. Funny, expressive, theatrical. \"WAIT... WHAT?!\"",
@@ -611,23 +616,15 @@
   };
   // ------------------------------------------------------------------------------
 
-  // Bubble lettering: replace each letter of a .bubble element with its glyph image from the Pastel Bubble font.
-  const GLYPHS = {"!":{"f":"u0021","w":0.24,"a":0.214},"\"":{"f":"u0022","w":0.352,"a":0.316},"#":{"f":"u0023","w":0.561,"a":0.517},"$":{"f":"u0024","w":0.381,"a":0.345},"%":{"f":"u0025","w":0.599,"a":0.573},"&":{"f":"u0026","w":0.553,"a":0.517},"'":{"f":"u0027","w":0.213,"a":0.177},"(":{"f":"u0028","w":0.329,"a":0.288},")":{"f":"u0029","w":0.321,"a":0.288},"*":{"f":"u002a","w":0.409,"a":0.363},"+":{"f":"u002b","w":0.413,"a":0.378},",":{"f":"u002c","w":0.232,"a":0.197},"-":{"f":"u002d","w":0.354,"a":0.319},".":{"f":"u002e","w":0.231,"a":0.195},"/":{"f":"u002f","w":0.422,"a":0.377},"0":{"f":"u0030","w":0.464,"a":0.428},"1":{"f":"u0031","w":0.328,"a":0.303},"2":{"f":"u0032","w":0.469,"a":0.429},"3":{"f":"u0033","w":0.464,"a":0.428},"4":{"f":"u0034","w":0.445,"a":0.419},"5":{"f":"u0035","w":0.415,"a":0.38},"6":{"f":"u0036","w":0.434,"a":0.398},"7":{"f":"u0037","w":0.441,"a":0.399},"8":{"f":"u0038","w":0.447,"a":0.412},"9":{"f":"u0039","w":0.434,"a":0.398},":":{"f":"u003a","w":0.231,"a":0.196},";":{"f":"u003b","w":0.231,"a":0.195},"<":{"f":"u003c","w":0.483,"a":0.44},"=":{"f":"u003d","w":0.383,"a":0.347},">":{"f":"u003e","w":0.482,"a":0.44},"?":{"f":"u003f","w":0.404,"a":0.368},"@":{"f":"u0040","w":0.652,"a":0.616},"A":{"f":"u0041","w":0.569,"a":0.527},"B":{"f":"u0042","w":0.489,"a":0.458},"C":{"f":"u0043","w":0.509,"a":0.473},"D":{"f":"u0044","w":0.524,"a":0.489},"E":{"f":"u0045","w":0.489,"a":0.454},"F":{"f":"u0046","w":0.489,"a":0.461},"G":{"f":"u0047","w":0.547,"a":0.532},"H":{"f":"u0048","w":0.512,"a":0.486},"I":{"f":"u0049","w":0.234,"a":0.208},"J":{"f":"u004a","w":0.424,"a":0.405},"K":{"f":"u004b","w":0.479,"a":0.45},"L":{"f":"u004c","w":0.466,"a":0.431},"M":{"f":"u004d","w":0.619,"a":0.593},"N":{"f":"u004e","w":0.525,"a":0.499},"O":{"f":"u004f","w":0.569,"a":0.533},"P":{"f":"u0050","w":0.484,"a":0.448},"Q":{"f":"u0051","w":0.613,"a":0.575},"R":{"f":"u0052","w":0.495,"a":0.454},"S":{"f":"u0053","w":0.448,"a":0.413},"T":{"f":"u0054","w":0.514,"a":0.479},"U":{"f":"u0055","w":0.528,"a":0.502},"V":{"f":"u0056","w":0.57,"a":0.538},"W":{"f":"u0057","w":0.721,"a":0.686},"X":{"f":"u0058","w":0.552,"a":0.512},"Y":{"f":"u0059","w":0.521,"a":0.477},"Z":{"f":"u005a","w":0.486,"a":0.45},"[":{"f":"u005b","w":0.307,"a":0.266},"\\":{"f":"u005c","w":0.422,"a":0.378},"]":{"f":"u005d","w":0.292,"a":0.266},"^":{"f":"u005e","w":0.404,"a":0.377},"_":{"f":"u005f","w":0.607,"a":0.565},"`":{"f":"u0060","w":0.327,"a":0.349},"a":{"f":"u0061","w":0.447,"a":0.423},"b":{"f":"u0062","w":0.456,"a":0.421},"c":{"f":"u0063","w":0.416,"a":0.386},"d":{"f":"u0064","w":0.445,"a":0.421},"e":{"f":"u0065","w":0.443,"a":0.408},"f":{"f":"u0066","w":0.371,"a":0.33},"g":{"f":"u0067","w":0.44,"a":0.415},"h":{"f":"u0068","w":0.453,"a":0.427},"i":{"f":"u0069","w":0.238,"a":0.216},"j":{"f":"u006a","w":0.231,"a":0.205},"k":{"f":"u006b","w":0.433,"a":0.392},"l":{"f":"u006c","w":0.298,"a":0.257},"m":{"f":"u006d","w":0.607,"a":0.581},"n":{"f":"u006e","w":0.455,"a":0.429},"o":{"f":"u006f","w":0.459,"a":0.423},"p":{"f":"u0070","w":0.45,"a":0.412},"q":{"f":"u0071","w":0.439,"a":0.413},"r":{"f":"u0072","w":0.377,"a":0.338},"s":{"f":"u0073","w":0.39,"a":0.355},"t":{"f":"u0074","w":0.375,"a":0.336},"u":{"f":"u0075","w":0.455,"a":0.43},"v":{"f":"u0076","w":0.474,"a":0.436},"w":{"f":"u0077","w":0.593,"a":0.544},"x":{"f":"u0078","w":0.451,"a":0.41},"y":{"f":"u0079","w":0.478,"a":0.436},"z":{"f":"u007a","w":0.45,"a":0.415},"{":{"f":"u007b","w":0.328,"a":0.286},"|":{"f":"u007c","w":0.209,"a":0.183},"}":{"f":"u007d","w":0.328,"a":0.286},"~":{"f":"u007e","w":0.45,"a":0.422},"א":{"f":"u05d0","w":0.506,"a":0.473},"ב":{"f":"u05d1","w":0.495,"a":0.463},"ג":{"f":"u05d2","w":0.389,"a":0.35},"ד":{"f":"u05d3","w":0.474,"a":0.446},"ה":{"f":"u05d4","w":0.474,"a":0.446},"ו":{"f":"u05d5","w":0.238,"a":0.214},"ז":{"f":"u05d6","w":0.368,"a":0.338},"ח":{"f":"u05d7","w":0.501,"a":0.472},"ט":{"f":"u05d8","w":0.501,"a":0.469},"י":{"f":"u05d9","w":0.238,"a":0.214},"ך":{"f":"u05da","w":0.443,"a":0.414},"כ":{"f":"u05db","w":0.453,"a":0.421},"ל":{"f":"u05dc","w":0.443,"a":0.4},"ם":{"f":"u05dd","w":0.485,"a":0.452},"מ":{"f":"u05de","w":0.511,"a":0.486},"ן":{"f":"u05df","w":0.238,"a":0.214},"נ":{"f":"u05e0","w":0.365,"a":0.338},"ס":{"f":"u05e1","w":0.511,"a":0.475},"ע":{"f":"u05e2","w":0.464,"a":0.437},"ף":{"f":"u05e3","w":0.455,"a":0.423},"פ":{"f":"u05e4","w":0.462,"a":0.433},"ץ":{"f":"u05e5","w":0.453,"a":0.423},"צ":{"f":"u05e6","w":0.47,"a":0.432},"ק":{"f":"u05e7","w":0.487,"a":0.454},"ר":{"f":"u05e8","w":0.431,"a":0.405},"ש":{"f":"u05e9","w":0.553,"a":0.524},"ת":{"f":"u05ea","w":0.539,"a":0.51},"–":{"f":"u2013","w":0.447,"a":0.413},"—":{"f":"u2014","w":0.53,"a":0.496},"‘":{"f":"u2018","w":0.231,"a":0.195},"’":{"f":"u2019","w":0.229,"a":0.195},"“":{"f":"u201c","w":0.377,"a":0.349},"”":{"f":"u201d","w":0.379,"a":0.349},"•":{"f":"u2022","w":0.297,"a":0.261},"…":{"f":"u2026","w":0.617,"a":0.589},"₪":{"f":"u20aa","w":0.69,"a":0.681}," ":{"f":null,"w":0,"a":0.176}};
+  // Bubble lettering: wrap every letter of a .bubble element in its own colored span.
   function bubblify(root) {
     (root || document).querySelectorAll(".bubble:not([data-bub])").forEach(el => {
       const text = el.textContent.replace(/\s+/g, " ").trim(); el.textContent = ""; el.dataset.bub = "1";
-      el.setAttribute("role", "img"); el.setAttribute("aria-label", text);
-      for (const word of text.split(" ")) {
+      let i = 0;
+      for (const wordText of text.split(" ")) {
         const w = document.createElement("span"); w.className = "W";
-        for (const ch of word) {
-          const up = ch.toUpperCase();
-          if (up >= "A" && up <= "Z") { const img = document.createElement("img"); img.className = "L"; img.src = "assets/font-caps-lav/" + up + ".webp"; img.alt = ""; w.appendChild(img); continue; }
-          const g = GLYPHS[ch];
-          if (!g || !g.f) { const t = document.createElement("span"); t.textContent = ch; w.appendChild(t); continue; }
-          const img = document.createElement("img"); img.className = "L P"; img.src = "assets/font/" + g.f + ".webp"; img.alt = "";
-          w.appendChild(img);
-        }
-        el.appendChild(w); const sp = document.createElement("span"); sp.className = "S"; sp.textContent = " "; el.appendChild(sp);
+        for (const ch of wordText) { const sp = document.createElement("span"); sp.className = "L c" + (i++ % 4); sp.textContent = ch; w.appendChild(sp); }
+        el.appendChild(w); const s = document.createElement("span"); s.className = "S"; s.textContent = " "; el.appendChild(s);
       }
       el.lastChild && el.removeChild(el.lastChild);
     });
@@ -644,7 +641,7 @@
 
   document.getElementById("friend-grid").innerHTML = SITE.friends.map(f => `
     <article class="friend" id="meet-${esc(f.id)}">
-      <div class="portrait"><img class="pose-a" src="${esc(f.img)}" alt="${esc(f.name)}">${f.alt ? `<img class="pose-b" src="${esc(f.alt)}" alt="" loading="lazy">` : ""}</div>
+      <div class="portrait">${f.video ? `<img src="${esc(f.poster)}" alt="${esc(f.name)}"><video autoplay muted loop playsinline preload="metadata" poster="${esc(f.poster)}" aria-hidden="true"><source src="${esc(f.video)}" type="video/mp4"></video>` : `<img src="${esc(f.img)}" alt="${esc(f.name)}">`}</div>
       <span class="chip ${esc(f.chip)}">${esc(f.name)}</span>
       <h3>${esc(f.name)}</h3>
       <p>${esc(f.blurb)}</p>
