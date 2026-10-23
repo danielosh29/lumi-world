@@ -69,9 +69,10 @@
      (color fonts don't render in every browser, images do) */
   .bubble { font-family: var(--display); font-weight: 700; width: fit-content; max-width: 100%; line-height: 1.15;
     filter: drop-shadow(0 .05em .12em rgba(240, 180, 55, .35)); }
-  .bubble .L { display: inline-block; height: 1em; width: auto; vertical-align: -0.21em; margin-right: -0.02em; max-width: none; }
+  .bubble .L { display: inline-block; height: 1em; width: auto; vertical-align: -0.16em; margin-right: -0.05em; max-width: none; }
+  .bubble .L.P { height: .92em; margin-left: .04em; vertical-align: -0.18em; }
   .bubble .W { display: inline-block; white-space: nowrap; }
-  .bubble .S { display: inline-block; width: .28em; }
+  .bubble .S { display: inline-block; width: .32em; }
   .bubble .T { opacity: 0; position: absolute; pointer-events: none; }
   .eyebrow { font-family: var(--display); font-weight: 600; font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
   section { padding-block: 60px 20px; }
@@ -615,9 +616,11 @@
       for (const word of text.split(" ")) {
         const w = document.createElement("span"); w.className = "W";
         for (const ch of word) {
+          const up = ch.toUpperCase();
+          if (up >= "A" && up <= "Z") { const img = document.createElement("img"); img.className = "L"; img.src = "assets/font-caps/" + up + ".webp"; img.alt = ""; w.appendChild(img); continue; }
           const g = GLYPHS[ch];
           if (!g || !g.f) { const t = document.createElement("span"); t.textContent = ch; w.appendChild(t); continue; }
-          const img = document.createElement("img"); img.className = "L"; img.src = "assets/font/" + g.f + ".webp"; img.alt = "";
+          const img = document.createElement("img"); img.className = "L P"; img.src = "assets/font/" + g.f + ".webp"; img.alt = "";
           w.appendChild(img);
         }
         el.appendChild(w); const sp = document.createElement("span"); sp.className = "S"; sp.textContent = " "; el.appendChild(sp);
