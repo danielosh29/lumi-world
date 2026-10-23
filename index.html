@@ -259,6 +259,7 @@
     <ul>
       <li><a href="#friends">Friends</a></li>
       <li><a href="#coloring">Coloring pages</a></li>
+      <li><a href="#printables">Party &amp; printables</a></li>
       <li><a href="#episodes">Episodes</a></li>
       <li><a href="#parents">For parents</a></li>
     </ul>
@@ -313,6 +314,17 @@
     </div>
     <div class="filters" id="coloring-filters" role="group" aria-label="Filter coloring pages"></div>
     <div class="grid" id="coloring-grid"></div>
+  </section>
+
+  <section id="printables">
+    <div class="section-head">
+      <span class="eyebrow">Print, cut &amp; celebrate</span>
+      <h2 class="bubble">Party kit &amp; printables</h2>
+      <p>Everything for a Lumi birthday, free to print at home. Letter size. More printables arrive every few weeks.</p>
+      <img class="peek" src="assets/lumi-tilly.webp" alt="" aria-hidden="true" loading="lazy">
+    </div>
+    <div class="filters" id="print-filters" role="group" aria-label="Filter printables"></div>
+    <div class="grid" id="print-grid"></div>
   </section>
 
   <section id="episodes">
@@ -523,6 +535,20 @@
       { id: "everyone",  label: "Everyone together" },
       { id: "halloween", label: "Halloween", cls: "spooky" }
     ],
+    // tags: party, everyday, episode
+    printables: [
+      { title: "Happy Birthday banner",  file: "assets/print/birthday-banner.pdf",        preview: "assets/print/birthday-banner.webp",        tags: ["party"], pages: "17 pages", note: "One letter per flag, plus Lumi, Reign, Pip and Tilly flags. Cut, punch and string." },
+      { title: "Cupcake & cake toppers", file: "assets/print/cupcake-cake-toppers.pdf",   preview: "assets/print/cupcake-cake-toppers.webp",   tags: ["party"], pages: "2 pages",  note: "Twelve cupcake circles and one big cake topper." },
+      { title: "Party invitation",       file: "assets/print/party-invitation.pdf",       preview: "assets/print/party-invitation.webp",       tags: ["party"], pages: "1 page",   note: "Five by seven inches, fill in by hand. Fits a standard envelope." },
+      { title: "Name tags",              file: "assets/print/name-tags.pdf",              preview: "assets/print/name-tags.webp",              tags: ["party"], pages: "1 page",   note: "Eight tags, two of each friend." },
+      { title: "Birthday crown",         file: "assets/print/birthday-crown.pdf",         preview: "assets/print/birthday-crown.webp",         tags: ["party"], pages: "1 page",   note: "Two halves to tape together. Best on card stock." },
+      { title: "Certificate of Friendship", file: "assets/print/friendship-certificate.pdf", preview: "assets/print/friendship-certificate.webp", tags: ["everyday"], pages: "1 page", note: "Official friend of Lumi, Pip, Reign and Tilly. Add a name and date." }
+    ],
+    printFilters: [
+      { id: "all", label: "All printables" },
+      { id: "party", label: "Birthday party" },
+      { id: "everyday", label: "Every day" }
+    ],
     // Replace each url with the real video link (https://www.youtube.com/watch?v=...).
     episodes: [
       { label: "Episode 1", title: "The Missing Colors!", sub: "Learn colors with Lumi", lesson: "Colors, teamwork, and feeling brave in the dark", img: "assets/ep-colors.webp", url: "https://www.youtube.com/watch?v=dvb8cCZxXpI",
@@ -611,19 +637,36 @@
       </div>
     </article>`).join("");
 
-  const filterBar = document.getElementById("coloring-filters");
-  const cards = [...document.querySelectorAll("#coloring-grid .card")];
-  const countFor = id => id === "all" ? cards.length : cards.filter(c => c.dataset.tags.split(" ").includes(id)).length;
-  filterBar.innerHTML = SITE.coloringFilters.map(f => `
-    <button type="button" id="filter-${esc(f.id)}" class="${esc(f.cls || "")}" data-filter="${esc(f.id)}" aria-pressed="${f.id === "all"}">${esc(f.label)}<span class="n">${countFor(f.id)}</span></button>`).join("");
-  function applyFilter(id) {
-    cards.forEach(c => { c.hidden = !(id === "all" || c.dataset.tags.split(" ").includes(id)); });
-    filterBar.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === id)));
+  document.getElementById("print-grid").innerHTML = SITE.printables.map(p => `
+    <article class="card" data-tags="${esc(p.tags.join(" "))}">
+      <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} preview" loading="lazy"></div>
+      <div class="card-body">
+        <div class="tags"><span class="chip ${p.tags[0] === "party" ? "pink" : "mint"}">${esc(p.tags[0] === "party" ? "Party" : "Every day")}</span><span class="chip" style="background:var(--bg);color:var(--muted)">${esc(p.pages)}</span></div>
+        <h3>${esc(p.title)}</h3>
+        <p>${esc(p.note)}</p>
+        <a class="btn btn-pink" href="${esc(p.file)}" target="_blank" rel="noopener">Open PDF</a>
+      </div>
+    </article>`).join("");
+
+  function setupFilters(barId, gridId, filters) {
+    const bar = document.getElementById(barId);
+    const cards = [...document.querySelectorAll(`#${gridId} .card`)];
+    const countFor = id => id === "all" ? cards.length : cards.filter(c => c.dataset.tags.split(" ").includes(id)).length;
+    bar.innerHTML = filters.map(f => `
+      <button type="button" id="${barId}-${esc(f.id)}" class="${esc(f.cls || "")}" data-filter="${esc(f.id)}" aria-pressed="${f.id === "all"}">${esc(f.label)}<span class="n">${countFor(f.id)}</span></button>`).join("");
+    const apply = id => {
+      cards.forEach(c => { c.hidden = !(id === "all" || c.dataset.tags.split(" ").includes(id)); });
+      bar.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === id)));
+    };
+    bar.addEventListener("click", ev => { const b = ev.target.closest("button[data-filter]"); if (b) apply(b.dataset.filter); });
+    return apply;
   }
-  filterBar.addEventListener("click", ev => { const b = ev.target.closest("button[data-filter]"); if (b) applyFilter(b.dataset.filter); });
+  const applyFilter = setupFilters("coloring-filters", "coloring-grid", SITE.coloringFilters);
+  const applyPrintFilter = setupFilters("print-filters", "print-grid", SITE.printFilters);
   // Deep links: #lumi, #halloween, #everyone open the shelf pre-filtered.
   const h = (location.hash || "").replace("#", "");
   if (SITE.coloringFilters.some(f => f.id === h && h !== "all")) { applyFilter(h); document.getElementById("coloring").scrollIntoView(); }
+  if (h === "party" || h === "everyday") { applyPrintFilter(h); document.getElementById("printables").scrollIntoView(); }
 
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const parseDay = d => { const [y, m, dd] = d.split("-").map(Number); return new Date(y, m - 1, dd); };
