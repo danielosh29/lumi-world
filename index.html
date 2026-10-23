@@ -4,7 +4,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <style>img{max-width:100%}[hidden]{display:none!important}</style>
 <title>Lumi and the Magical World</title>
-<meta name="description" content="Lumi and the Magical World: free printable coloring pages, every episode, and a parents' guide to the animated series for kids aged four to nine.">
+<meta name="description" content="Lumi and the Magical World: free printable coloring pages, every episode, and a parents' guide to the animated series for toddlers and preschoolers.">
 <link rel="canonical" href="https://lumimagicalworld.com/">
 <link rel="icon" type="image/png" sizes="64x64" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
@@ -169,6 +169,7 @@
   .ep-body { padding: 14px 18px 18px; display: grid; gap: 4px; }
   .ep-body .meta { color: var(--muted); font-size: .85rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
   .ep-body p { color: var(--muted); font-size: .95rem; }
+  .ep-body .watch { color: var(--ink); font-weight: 800; margin-top: 4px; }
 
   /* parents */
   .parents { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; align-items: start; }
@@ -228,7 +229,7 @@
     <div class="hero-copy">
       <span class="eyebrow">Free coloring pages &amp; every episode</span>
       <h1 class="bubble">Welcome to the Magical World!</h1>
-      <p>An animated series where everyday moments turn into unforgettable adventures. Join Lumi, Pip, Reign and Tilly through mysteries, school days and stories about friendship and family, made for kids aged four to nine.</p>
+      <p>An animated series where everyday moments turn into unforgettable adventures. Join Lumi, Pip, Reign and Tilly through mysteries, school days and stories about friendship and family, made for toddlers and preschoolers, ages three and up.</p>
       <div class="hero-actions">
         <a class="btn btn-sun" id="yt-hero" href="#" target="_blank" rel="noopener">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.5 12 31 31 0 0 0 23 7.2ZM9.8 15.1V8.9L15.8 12Z"/></svg>
@@ -293,7 +294,7 @@
         <ul>
           <li>One clear idea per episode: being brave, sharing, kindness, curiosity.</li>
           <li>Recurring characters kids grow with: Lumi, Pip, Reign and Tilly.</li>
-          <li>Original stories, music and visuals, made with care for ages four to nine.</li>
+          <li>Original stories, music and visuals, made with care for ages three and up.</li>
           <li>Coloring pages match the episodes, so the story continues off-screen.</li>
         </ul>
       </div>
@@ -345,8 +346,8 @@
     friends: [
       { name: "Lumi",  chip: "lav",  img: "assets/char-lumi.webp",   blurb: "Lavender hair, big blue eyes and a heart full of dreams. Tiny brave, every day." },
       { name: "Reign", chip: "pink", img: "assets/char-reign.webp",  blurb: "Curly hair, giant smile, first to say yes to an adventure." },
-      { name: "Pip",   chip: "sky",  img: "assets/char-pip.webp",    blurb: "The little one with green hair and a unicorn bag, learning to be brave." },
-      { name: "Tilly", chip: "sun", img: "assets/char-tilly.webp", blurb: "Red curls, bright ideas and a flower on her sweater. Never far from a giggle." }
+      { name: "Pip",   chip: "sky",  img: "assets/char-pip.webp",    blurb: "Lumi's little brother. Green hair, a unicorn bag, and a big heart learning to be brave." },
+      { name: "Tilly", chip: "sun", img: "assets/char-tilly.webp", blurb: "Lumi's best friend. Red curls, bright ideas and a flower on her sweater." }
     ],
     // tags: lumi, reign, pip, tilly, everyone, halloween. A page can carry several.
     coloringPages: [
@@ -372,10 +373,11 @@
     ],
     // Replace each url with the real video link (https://www.youtube.com/watch?v=...).
     episodes: [
-      { label: "Episode 2", title: "Midnight Mystery",  sub: "Pip learns to be brave", img: "assets/ep2-midnight.webp", url: "https://www.youtube.com/@lumiandthemagicalworld/videos" },
-      { label: "Episode 3", title: "Dinosaur Land!",    sub: "A roaring adventure",    img: "assets/ep3-dinosaur.webp", url: "https://www.youtube.com/@lumiandthemagicalworld/videos" },
-      { label: "Episode 4", title: "The Lost Unicorn",  sub: "Friends find the way",   img: "assets/ep4-unicorn.webp",  url: "https://www.youtube.com/@lumiandthemagicalworld/videos" },
-      { label: "Episode",   title: "No More Colors?!",  sub: "When the colors vanish", img: "assets/ep-colors.webp",    url: "https://www.youtube.com/@lumiandthemagicalworld/videos" }
+      { label: "Episode 1", title: "The Missing Colors!", sub: "Learn colors with Lumi", lesson: "Colors, teamwork, and feeling brave in the dark", img: "assets/ep-colors.webp", url: "https://www.youtube.com/watch?v=dvb8cCZxXpI",
+        summary: "All the colors vanish from Lumi's classroom. Lumi and her best friend Tilly solve Reign's three magical clues, the green grass, the yellow sun and the blue sky, to bring them back. At bedtime, Lumi helps her little brother Pip feel brave about the dark." },
+      { label: "Episode 2", title: "Midnight Mystery",  sub: "Pip learns to be brave", lesson: "Courage", img: "assets/ep2-midnight.webp", url: "https://www.youtube.com/@lumiandthemagicalworld/videos" },
+      { label: "Episode 3", title: "Dinosaur Land!",    sub: "A roaring adventure",    lesson: "Curiosity", img: "assets/ep3-dinosaur.webp", url: "https://www.youtube.com/@lumiandthemagicalworld/videos" },
+      { label: "Episode 4", title: "The Lost Unicorn",  sub: "Friends find the way",   lesson: "Friendship", img: "assets/ep4-unicorn.webp",  url: "https://www.youtube.com/@lumiandthemagicalworld/videos" }
     ]
   };
   // ------------------------------------------------------------------------------
@@ -427,9 +429,10 @@
     <a class="ep" href="${esc(e.url)}" target="_blank" rel="noopener">
       <img src="${esc(e.img)}" alt="${esc(e.title)} thumbnail" loading="lazy">
       <div class="ep-body">
-        <span class="meta">${esc(e.label)}</span>
+        <span class="meta">${esc(e.label)}${e.lesson ? " · " + esc(e.lesson) : ""}</span>
         <h3>${esc(e.title)}</h3>
-        <p>${esc(e.sub)} · Watch on YouTube →</p>
+        <p>${esc(e.summary || e.sub)}</p>
+        <p class="watch">Watch on YouTube →</p>
       </div>
     </a>`).join("");
 
