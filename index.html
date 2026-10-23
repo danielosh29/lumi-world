@@ -620,7 +620,7 @@
         const w = document.createElement("span"); w.className = "W";
         for (const ch of word) {
           const up = ch.toUpperCase();
-          if (up >= "A" && up <= "Z") { const img = document.createElement("img"); img.className = "L"; img.src = "assets/font-caps/" + up + ".webp"; img.alt = ""; w.appendChild(img); continue; }
+          if (up >= "A" && up <= "Z") { const img = document.createElement("img"); img.className = "L"; img.src = "assets/font-caps-lav/" + up + ".webp"; img.alt = ""; w.appendChild(img); continue; }
           const g = GLYPHS[ch];
           if (!g || !g.f) { const t = document.createElement("span"); t.textContent = ch; w.appendChild(t); continue; }
           const img = document.createElement("img"); img.className = "L P"; img.src = "assets/font/" + g.f + ".webp"; img.alt = "";
