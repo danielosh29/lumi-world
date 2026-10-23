@@ -141,6 +141,29 @@
   .chip.sun { background: var(--sun); color: #4a3300; }
   .chip.mint { background: var(--mint); color: var(--mint-ink); }
 
+  .friend .meet-btn { padding: 9px 18px; font-size: .95rem; margin-top: 4px; }
+  .friend .soon { font-size: .8rem; font-weight: 800; color: var(--muted); margin-top: 8px; }
+  /* profile dialog */
+  .profile { border: 0; border-radius: 30px; padding: 0; width: min(760px, calc(100% - 32px)); max-height: calc(100% - 48px); background: var(--paper); color: var(--ink); box-shadow: 0 30px 80px rgba(30, 15, 70, .35); overflow: hidden; }
+  .profile::backdrop { background: rgba(26, 21, 56, .6); backdrop-filter: blur(4px); }
+  .profile .close { position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--bg); color: var(--ink); font-size: 1.5rem; line-height: 1; cursor: pointer; z-index: 2; }
+  .profile-body { padding: 28px 32px 32px; display: grid; gap: 14px; overflow-y: auto; max-height: calc(100vh - 48px); }
+  .profile-hero { display: grid; grid-template-columns: 160px 1fr; gap: 20px; align-items: center; }
+  .profile-hero img { height: 260px; width: auto; max-width: 100%; justify-self: center; filter: drop-shadow(0 10px 14px rgba(58, 39, 99, .22)); }
+  .profile-hero > div { display: grid; gap: 10px; min-width: 0; }
+  .profile-hero h2 { font-size: clamp(2rem, 6vw, 3rem); }
+  .facts { display: grid; gap: 6px; }
+  .facts div, .list .row { display: grid; grid-template-columns: minmax(120px, 160px) 1fr; gap: 10px; font-size: .95rem; }
+  .facts b, .list b { color: var(--ink); font-weight: 800; }
+  .facts span, .list span, .profile-body p { color: var(--muted); }
+  .profile-body h3 { font-family: var(--display); font-weight: 600; font-size: 1.2rem; margin-top: 8px; }
+  .list { display: grid; gap: 8px; }
+  .list .row { background: var(--bg); border-radius: 14px; padding: 10px 14px; }
+  .profile-body blockquote { margin: 8px 0 0; padding: 18px 22px; border-radius: 20px; background: linear-gradient(100deg, var(--pink), var(--sun) 35%, var(--sky) 68%, var(--lav)); color: #2d1358; font-family: var(--display); font-weight: 600; font-size: 1.25rem; display: grid; gap: 6px; }
+  .profile-body blockquote small { font-family: var(--body); font-weight: 700; font-size: .9rem; opacity: .85; }
+  .profile-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+  @media (max-width: 600px) { .profile-hero { grid-template-columns: 1fr; } .profile-hero img { height: 200px; } .facts div, .list .row { grid-template-columns: 1fr; gap: 2px; } .profile-body { padding: 22px 18px 26px; } }
+
   /* coloring shelf */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
   .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
@@ -329,6 +352,11 @@
     </div>
   </section>
 
+  <dialog id="profile" class="profile" aria-label="Character profile">
+    <button type="button" class="close" data-close aria-label="Close">×</button>
+    <div class="profile-body"></div>
+  </dialog>
+
   <footer>
     <img src="assets/logo.webp" alt="Lumi">
     <p><b>Lumi and the Magical World</b> · story, visuals &amp; music by Danielle Iv · © <span id="year"></span> All rights reserved.</p>
@@ -345,10 +373,62 @@
     contactEmail: "lumipipworld@gmail.com",
     subscribers: "3,500",
     friends: [
-      { name: "Lumi",  chip: "lav",  img: "assets/char-lumi.webp",   blurb: "Lavender hair, big blue eyes and a heart full of dreams. Tiny brave, every day." },
-      { name: "Reign", chip: "pink", img: "assets/char-reign.webp",  blurb: "Curly hair, giant smile, first to say yes to an adventure." },
-      { name: "Pip",   chip: "sky",  img: "assets/char-pip.webp",    blurb: "Lumi's little brother. Green hair, a unicorn bag, and a big heart learning to be brave." },
-      { name: "Tilly", chip: "sun", img: "assets/char-tilly.webp", blurb: "Lumi's best friend. Red curls, bright ideas and a flower on her sweater." }
+      { id: "lumi", name: "Lumi", chip: "lav", img: "assets/char-lumi.webp", coloring: "lumi",
+        blurb: "Kind, thoughtful, gentle and curious. Finds the good in every situation.",
+        age: "9 years old", personality: "Kind, thoughtful, gentle & curious", sparkle: "Finding the good in every situation",
+        about: [
+          "Lumi is a sweet, thoughtful girl with beautiful purple hair, sparkling blue eyes, and a heart full of kindness. She loves discovering new things, helping her friends, and exploring the magical world around her.",
+          "Lumi isn't always the loudest in the room, but she has a wonderful way of noticing the little things that others might miss. Whether she's solving a mystery, helping someone feel brave, or discovering something extraordinary, Lumi reminds us that sometimes the greatest magic comes from a gentle heart."
+        ],
+        special: [
+          ["A caring heart", "Lumi always tries to understand how others are feeling."],
+          ["A curious mind", "She loves asking questions and discovering how things work."],
+          ["Quiet courage", "She shows that being brave doesn't always mean being fearless."],
+          ["A thoughtful friend", "Lumi listens, encourages, and helps her friends find their own solutions."],
+          ["A loving big sister", "She shares a special bond with her little brother, Pip."]
+        ],
+        favorites: [
+          ["Favorite color", "Lavender, of course!"],
+          ["Favorite activity", "Exploring magical places with her friends."],
+          ["Favorite kind of magic", "The kind that makes someone smile."],
+          ["Something she loves", "Spending time with Pip and discovering beautiful little surprises."]
+        ],
+        learn: "Through Lumi's adventures, children discover the importance of kindness, empathy, curiosity, friendship, and believing in themselves. Lumi encourages little viewers to think before they act, care for others, and understand that even the smallest act of kindness can make a big difference.",
+        reminder: "You don't have to be the loudest to shine the brightest.",
+        tagline: "A gentle heart. A curious mind. A little everyday magic. That's Lumi!"
+      },
+      { id: "reign", name: "Reign", chip: "pink", img: "assets/char-reign.webp", coloring: "reign",
+        blurb: "Curly hair, giant smile, first to say yes to an adventure." },
+      { id: "pip", name: "Pip", chip: "sky", img: "assets/char-pip.webp", coloring: "pip",
+        blurb: "Lumi's little brother. Sweet, curious, and full of approximately a million questions.",
+        age: "7 years old", personality: "Sweet, curious, gentle & wonderfully innocent", sparkle: "Seeing the extraordinary in ordinary things",
+        about: [
+          "Meet Pip! A sweet little boy with messy mint-green hair, bright green eyes, pointy elf ears, and approximately a million questions! Pip is Lumi's younger brother, and he has a very special talent: turning the smallest everyday moments into exciting discoveries.",
+          "Why do fireflies glow? Can dinosaurs sneeze? And what happens if a unicorn tries to bark like a puppy? Pip wants to know EVERYTHING!",
+          "Sometimes he gets a little nervous when something feels unfamiliar, and sometimes his imagination runs away with him. But with a little encouragement, Pip discovers that he's often much braver than he thinks. He may be the youngest adventurer in the group, but his kindness, curiosity, and big little heart make him an important part of every magical journey."
+        ],
+        special: [
+          ["Endlessly curious", "Pip loves asking questions, investigating little mysteries, and learning new things."],
+          ["A gentle heart", "He cares deeply about his friends, animals, and magical creatures."],
+          ["Brave in little steps", "Even when something feels scary, Pip learns that courage can begin with one tiny step."],
+          ["Wonderfully imaginative", "His creative ideas sometimes lead to the funniest surprises!"],
+          ["A loving little brother", "Pip looks up to Lumi, but he has plenty of wonderful discoveries to share with her, too."]
+        ],
+        favorites: [
+          ["Favorite color", "Mint green!"],
+          ["Favorite activity", "Discovering something new and telling everyone about it."],
+          ["Favorite creatures", "Dinosaurs, unicorns, and just about any animal he can make friends with!"],
+          ["Favorite question", "\"But why?\""],
+          ["Something he loves", "Sharing exciting discoveries with his big sister, Lumi."],
+          ["Signature saying", "\"Guess what I discovered today!\""]
+        ],
+        learn: "Through Pip's adventures, children discover that asking questions is a wonderful way to learn. Pip encourages little viewers to stay curious, explore the world around them, care for animals, and understand that it's okay not to know everything. He also shows children that feeling nervous is perfectly normal, and that bravery doesn't have to be big or loud. Sometimes, being brave simply means trying something new, asking for help, or taking one small step forward.",
+        extra: ["Pip's Discoveries!", "In his own little adventures, Pip shares surprising things he's learned about the world. Sometimes he starts with a very funny idea about how something works, only to discover an even more fascinating answer! With Pip, learning feels like an adventure full of giggles, wonder, and sweet surprises."],
+        reminder: "You don't have to know everything. That's what discovering is for!",
+        tagline: "A little explorer. A million questions. A heart full of wonder. That's Pip!"
+      },
+      { id: "tilly", name: "Tilly", chip: "sun", img: "assets/char-tilly.webp", coloring: "tilly",
+        blurb: "Lumi's best friend. Red curls, bright ideas and a flower on her sweater." }
     ],
     // tags: lumi, reign, pip, tilly, everyone, halloween. A page can carry several.
     coloringPages: [
@@ -395,12 +475,51 @@
   document.getElementById("year").textContent = new Date().getFullYear();
 
   document.getElementById("friend-grid").innerHTML = SITE.friends.map(f => `
-    <article class="friend">
+    <article class="friend" id="meet-${esc(f.id)}">
       <div class="portrait"><img src="${esc(f.img)}" alt="${esc(f.name)}"></div>
       <span class="chip ${esc(f.chip)}">${esc(f.name)}</span>
       <h3>${esc(f.name)}</h3>
       <p>${esc(f.blurb)}</p>
+      ${f.about ? `<button type="button" class="btn btn-ghost meet-btn" data-friend="${esc(f.id)}">Meet ${esc(f.name)}</button>` : `<span class="soon">Full profile coming soon</span>`}
     </article>`).join("");
+
+  const dlg = document.getElementById("profile");
+  const pair = (rows, cls) => rows.map(([k, v]) => `<div class="${cls}"><b>${esc(k)}</b><span>${esc(v)}</span></div>`).join("");
+  function openProfile(id) {
+    const f = SITE.friends.find(x => x.id === id); if (!f || !f.about) return;
+    dlg.querySelector(".profile-body").innerHTML = `
+      <div class="profile-hero">
+        <img src="${esc(f.img)}" alt="${esc(f.name)}">
+        <div>
+          <span class="eyebrow">Meet</span>
+          <h2 class="bubble">${esc(f.name)}</h2>
+          <div class="facts">
+            <div><b>Age</b><span>${esc(f.age)}</span></div>
+            <div><b>Personality</b><span>${esc(f.personality)}</span></div>
+            <div><b>Special sparkle</b><span>${esc(f.sparkle)}</span></div>
+          </div>
+        </div>
+      </div>
+      <h3>A little about ${esc(f.name)}</h3>
+      ${f.about.map(t => `<p>${esc(t)}</p>`).join("")}
+      <h3>What makes ${esc(f.name)} special?</h3>
+      <div class="list">${pair(f.special, "row")}</div>
+      <h3>${esc(f.name)}'s little favorites</h3>
+      <div class="list favs">${pair(f.favorites, "row")}</div>
+      <h3>What can children learn from ${esc(f.name)}?</h3>
+      <p>${esc(f.learn)}</p>
+      ${f.extra ? `<h3>${esc(f.extra[0])}</h3><p>${esc(f.extra[1])}</p>` : ""}
+      <blockquote>"${esc(f.reminder)}"<small>${esc(f.tagline)}</small></blockquote>
+      <div class="profile-actions">
+        <a class="btn btn-pink" href="#${esc(f.coloring)}" data-close>Color ${esc(f.name)}</a>
+      </div>`;
+    dlg.showModal();
+  }
+  document.getElementById("friend-grid").addEventListener("click", ev => { const b = ev.target.closest(".meet-btn"); if (b) openProfile(b.dataset.friend); });
+  dlg.addEventListener("click", ev => { if (ev.target === dlg || ev.target.closest("[data-close]")) { dlg.close(); } });
+  dlg.querySelector("[data-close]").addEventListener("click", () => dlg.close());
+  dlg.addEventListener("close", () => { const h = location.hash.replace("#", ""); if (SITE.coloringFilters.some(f => f.id === h)) { applyFilter(h); document.getElementById("coloring").scrollIntoView({ behavior: "smooth" }); } });
+  if (location.hash.startsWith("#meet-")) openProfile(location.hash.slice(6));
 
   const TAG_LABEL = { lumi: "Lumi", reign: "Reign", pip: "Pip", tilly: "Tilly", everyone: "Everyone", halloween: "Halloween" };
   const TAG_CLS = { lumi: "lav", reign: "pink", pip: "sky", tilly: "sun", everyone: "mint", halloween: "spooky" };
