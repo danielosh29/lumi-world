@@ -205,6 +205,19 @@
   .card-body p { color: var(--muted); font-size: .95rem; }
   .card .btn { padding: 10px 18px; font-size: .95rem; width: fit-content; }
 
+  /* corners */
+  .corners { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  .corner { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; padding: 16px; border-radius: 24px; text-decoration: none; color: var(--ink); background: var(--paper); box-shadow: var(--shadow); border-top: 6px solid var(--c); transition: transform .15s ease; min-width: 0; }
+  .corner.lav { --c: var(--lav); } .corner.pink { --c: var(--pink); } .corner.sun { --c: var(--sun); } .corner.sky { --c: var(--sky); }
+  .corner img { height: 110px; width: auto; max-width: 100%; justify-self: center; }
+  .corner h3 { font-size: 1.15rem; }
+  .corner p { color: var(--muted); font-size: .92rem; margin-top: 2px; }
+  .corner .go { display: inline-block; margin-top: 8px; font-weight: 800; font-size: .9rem; }
+  a.corner:hover { transform: translateY(-3px); }
+  .corner.soon-c { opacity: .75; }
+  .corner.soon-c .go { color: var(--muted); }
+  @media (prefers-reduced-motion: reduce) { .corner { transition: none; } a.corner:hover { transform: none; } }
+
   /* episodes */
   .episodes { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
   .ep { background: var(--paper); border-radius: 24px; box-shadow: var(--shadow); overflow: hidden; text-decoration: none; display: flex; flex-direction: column; min-width: 0; transition: transform .15s ease; }
@@ -265,6 +278,7 @@
     <ul>
       <li><a href="#friends">Friends</a></li>
       <li><a href="#coloring">Coloring pages</a></li>
+      <li><a href="#corners">Corners</a></li>
       <li><a href="#episodes">Episodes</a></li>
       <li><a href="#parents">For parents</a></li>
     </ul>
@@ -330,6 +344,15 @@
     </div>
     <div class="filters" id="print-filters" role="group" aria-label="Filter printables"></div>
     <div class="grid" id="print-grid"></div>
+  </section>
+
+  <section id="corners">
+    <div class="section-head">
+      <span class="eyebrow">Shorts between episodes</span>
+      <h2 class="bubble">The friends' little corners</h2>
+      <p>Quick Shorts on YouTube, one corner per friend. Perfect for a two-minute break.</p>
+    </div>
+    <div class="corners" id="corner-grid"></div>
   </section>
 
   <section id="episodes">
@@ -547,6 +570,12 @@
       { id: "everyone",  label: "Everyone together" },
       { id: "halloween", label: "Halloween", cls: "spooky" }
     ],
+    corners: [
+      { id: "lumi",  title: "Lumi's Morning Magic", sub: "A gentle start to the day, with Lumi.", sticker: "assets/stickers/lumi-02.webp",  url: "https://www.youtube.com/playlist?list=PLHCDpb80eMa8", chip: "lav" },
+      { id: "reign", title: "Reign's Riddles",      sub: "Listen, look for clues, and guess!",    sticker: "assets/stickers/reign-11.webp", url: "https://www.youtube.com/playlist?list=PLI2Z2L5DgqWE", chip: "pink" },
+      { id: "tilly", title: "Tilly's Silly Jokes",  sub: "Groan and giggle at the same time.",    sticker: "assets/stickers/tilly-02.webp", url: "https://www.youtube.com/playlist?list=PLfNQrpOPxQKc", chip: "sun" },
+      { id: "pip",   title: "Pip's Discoveries",    sub: "Guess what Pip discovered today!",      sticker: "assets/stickers/pip-10.webp",   url: "", chip: "sky" }
+    ],
     // tags: party, everyday, episode
     printables: [
       { title: "Happy Birthday banner",  file: "assets/print/birthday-banner.pdf",        preview: "assets/print/birthday-banner.webp",        tags: ["party"], pages: "13 pages", note: "One letter per flag, pastel sky and bubble letters. Cut, punch and string." },
@@ -672,6 +701,16 @@
         <a class="btn btn-pink" href="${esc(p.file)}" target="_blank" rel="noopener">Open PDF</a>
       </div>
     </article>`).join("");
+
+  document.getElementById("corner-grid").innerHTML = SITE.corners.map(c => c.url ? `
+    <a class="corner ${esc(c.chip)}" href="${esc(c.url)}" target="_blank" rel="noopener">
+      <img src="${esc(c.sticker)}" alt="" loading="lazy">
+      <div><h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">Watch the playlist →</span></div>
+    </a>` : `
+    <div class="corner ${esc(c.chip)} soon-c">
+      <img src="${esc(c.sticker)}" alt="" loading="lazy">
+      <div><h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">Coming soon</span></div>
+    </div>`).join("");
 
   document.getElementById("print-grid").innerHTML = SITE.printables.map(p => `
     <article class="card" data-tags="${esc(p.tags.join(" "))}">
