@@ -303,7 +303,7 @@
     <div class="section-head">
       <span class="eyebrow">Season one</span>
       <h2 class="bubble">Watch the episodes</h2>
-      <p>Each episode runs fifteen to twenty minutes and follows one adventure. All episodes play on YouTube.</p>
+      <p>Each episode runs ten to fifteen minutes and follows one adventure. Between episodes, the channel is full of Shorts: Pip's Discoveries, Reign's Riddle Time, Tilly's Joke Time, and favorite moments from the episodes.</p>
     </div>
     <div class="episodes" id="episode-list"></div>
     <div class="band">
@@ -312,6 +312,7 @@
       </video>
       <div class="band-cta">
         <a class="btn btn-sun" id="yt-band" href="#" target="_blank" rel="noopener">Subscribe on YouTube</a>
+        <a class="btn btn-ghost" id="yt-shorts" href="#" target="_blank" rel="noopener">Watch the Shorts</a>
       </div>
     </div>
   </section>
@@ -380,7 +381,7 @@
     channelUrl: "https://www.youtube.com/@lumiandthemagicalworld",
     videosUrl: "https://www.youtube.com/@lumiandthemagicalworld/videos",
     contactEmail: "lumipipworld@gmail.com",
-    subscribers: "3,500",
+    subscribers: "Over 3,000",
     friends: [
       { id: "lumi", name: "Lumi", chip: "lav", img: "assets/char-lumi.webp", coloring: "lumi",
         bubbles: ["9 years old", "Gentle heart", "Curious mind", "Quiet courage", "Pip's big sister", "Loves lavender", "Finds the good in everything"],
@@ -520,6 +521,7 @@
 
   document.getElementById("yt-hero").href = SITE.channelUrl;
   document.getElementById("yt-band").href = SITE.channelUrl + "?sub_confirmation=1";
+  document.getElementById("yt-shorts").href = SITE.channelUrl + "/shorts";
   document.getElementById("sub-count").textContent = SITE.subscribers;
   document.getElementById("contact-email").textContent = SITE.contactEmail;
   document.getElementById("year").textContent = new Date().getFullYear();
