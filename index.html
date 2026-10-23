@@ -192,6 +192,8 @@
   .filters button[aria-pressed="true"] .n { background: rgba(255,255,255,.18); color: inherit; }
   .filters button.spooky[aria-pressed="true"] { background: #4a2a7a; border-color: #4a2a7a; }
   .card[hidden] { display: none !important; }
+  .more-row { display: flex; justify-content: center; margin-top: 20px; }
+  .more-row[hidden] { display: none; }
   .card .tags { display: flex; gap: 6px; flex-wrap: wrap; }
   .card .tags .chip { font-size: .7rem; padding: 2px 9px; }
   .card { background: var(--paper); border-radius: 24px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; min-width: 0; }
@@ -688,11 +690,22 @@
     const countFor = id => id === "all" ? cards.length : cards.filter(c => c.dataset.tags.split(" ").includes(id)).length;
     bar.innerHTML = filters.map(f => `
       <button type="button" id="${barId}-${esc(f.id)}" class="${esc(f.cls || "")}" data-filter="${esc(f.id)}" aria-pressed="${f.id === "all"}">${esc(f.label)}<span class="n">${countFor(f.id)}</span></button>`).join("");
+    const LIMIT = 8; let expanded = false;
+    const more = document.createElement("div"); more.className = "more-row";
+    const moreBtn = document.createElement("button"); moreBtn.type = "button"; moreBtn.className = "btn btn-ghost"; more.appendChild(moreBtn);
+    document.getElementById(gridId).after(more);
     const apply = id => {
-      cards.forEach(c => { c.hidden = !(id === "all" || c.dataset.tags.split(" ").includes(id)); });
+      const match = cards.filter(c => id === "all" || c.dataset.tags.split(" ").includes(id));
+      cards.forEach(c => { c.hidden = true; });
+      match.forEach((c, i) => { c.hidden = !(expanded || i < LIMIT); });
       bar.querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.filter === id)));
+      more.hidden = match.length <= LIMIT;
+      moreBtn.textContent = expanded ? "Show fewer" : `Show all ${match.length} pages`;
+      more.dataset.filter = id;
     };
-    bar.addEventListener("click", ev => { const b = ev.target.closest("button[data-filter]"); if (b) apply(b.dataset.filter); });
+    moreBtn.addEventListener("click", () => { expanded = !expanded; apply(more.dataset.filter || "all"); if (!expanded) document.getElementById(gridId).scrollIntoView({ behavior: "smooth", block: "start" }); });
+    bar.addEventListener("click", ev => { const b = ev.target.closest("button[data-filter]"); if (b) { expanded = false; apply(b.dataset.filter); } });
+    apply("all");
     return apply;
   }
   const applyFilter = setupFilters("coloring-filters", "coloring-grid", SITE.coloringFilters);
