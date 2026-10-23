@@ -167,7 +167,8 @@
   .ep:hover { transform: translateY(-3px); }
   .ep img { display: block; width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
   .ep-body { padding: 14px 18px 18px; display: grid; gap: 4px; }
-  .ep-body .meta { color: var(--muted); font-size: .85rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; }
+  .ep-body .meta { color: var(--muted); font-size: .85rem; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .ep-body .meta .chip { font-size: .7rem; padding: 2px 9px; letter-spacing: .04em; }
   .ep-body p { color: var(--muted); font-size: .95rem; }
   .ep-body .watch { color: var(--ink); font-weight: 800; margin-top: 4px; }
 
@@ -379,7 +380,8 @@
         summary: "Pip is scared of the dark, so Reign takes him on a little night adventure. Deep in the forest they hear three strange noises. Instead of running away, Pip learns to get a little closer and find out what's really there: a branch, a firefly, and some sleepy bunnies. A gentle bedtime story about fear of the dark." },
       { label: "Episode 3", title: "Dinosaur Land!", sub: "Can they find the three dinosaurs?", lesson: "Dino facts, curiosity and teamwork", img: "assets/ep3-dinosaur.webp", url: "https://www.youtube.com/watch?v=yN1-tLw56KA",
         summary: "Lumi, Tilly and Reign meet Romi the Dino Expert in Dinosaur Land. They can only get back home if they find the three hidden dinosaurs. Join the adventure, learn cool dino facts, and see if they can do it together." },
-      { label: "Episode 4", title: "The Lost Unicorn",  sub: "Friends find the way",   lesson: "Friendship", img: "assets/ep4-unicorn.webp",  url: "https://www.youtube.com/@lumiandthemagicalworld/videos" }
+      { label: "Episode 4", title: "The Lost Unicorn", sub: "Small brave steps", lesson: "Courage, friendship and small brave steps", img: "assets/ep4-unicorn.webp", url: "https://www.youtube.com/watch?v=bVLsTzncR84", premiere: "2026-10-24",
+        summary: "A little unicorn is lost in Lumi's magical world and can't find the way home. Lumi, Pip, Reign, Tilly and their new unicorn friend set off on a big adventure together, crossing a wobbly bridge and facing brave new challenges. \"You don't have to fly high. Just try a little.\"" }
     ]
   };
   // ------------------------------------------------------------------------------
@@ -427,11 +429,16 @@
   const h = (location.hash || "").replace("#", "");
   if (SITE.coloringFilters.some(f => f.id === h && h !== "all")) { applyFilter(h); document.getElementById("coloring").scrollIntoView(); }
 
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const parseDay = d => { const [y, m, dd] = d.split("-").map(Number); return new Date(y, m - 1, dd); };
+  const isUpcoming = d => !!d && parseDay(d) > today;
+  const isFresh = d => !!d && (today - parseDay(d)) / 864e5 <= 14;
+  const fmtDate = d => parseDay(d).toLocaleDateString("en-US", { month: "short", day: "numeric" });
   document.getElementById("episode-list").innerHTML = SITE.episodes.map(e => `
     <a class="ep" href="${esc(e.url)}" target="_blank" rel="noopener">
       <img src="${esc(e.img)}" alt="${esc(e.title)} thumbnail" loading="lazy">
       <div class="ep-body">
-        <span class="meta">${esc(e.label)}${e.lesson ? " · " + esc(e.lesson) : ""}</span>
+        <span class="meta">${esc(e.label)}${e.lesson ? " · " + esc(e.lesson) : ""}${isUpcoming(e.premiere) ? ` <span class="chip pink">Premieres ${fmtDate(e.premiere)}</span>` : isFresh(e.premiere) ? ` <span class="chip sun">New</span>` : ""}</span>
         <h3>${esc(e.title)}</h3>
         <p>${esc(e.summary || e.sub)}</p>
         <p class="watch">Watch on YouTube →</p>
