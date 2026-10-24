@@ -147,13 +147,13 @@
   .hero-friends img:nth-child(3) { height: 230px; position: relative; z-index: 1; }
 
   /* friends */
-  .friends { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .friends { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; }
   .friend { background: var(--paper); border-radius: 26px; padding: 18px 18px 22px; box-shadow: var(--shadow); display: grid; gap: 8px; justify-items: center; text-align: center; min-width: 0; }
   .friend .portrait { position: relative; width: 100%; aspect-ratio: 9 / 13; max-height: 300px; border-radius: 18px; overflow: hidden; background: #fff; }
   .friend .portrait video, .friend .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
   .friend .portrait video { display: block; }
   @media (prefers-reduced-motion: reduce) { .friend .portrait video { display: none; } }
-  .friend .portrait:not(:has(video)) img { position: static; height: 230px; width: auto; object-fit: contain; }
+  .friend .portrait:not(:has(video)) img:not(.framed) { position: static; height: 230px; width: auto; object-fit: contain; }
   .friend h3 { font-size: 1.5rem; }
   .friend p { color: var(--muted); font-size: .95rem; }
   .chip { font-family: var(--display); font-weight: 600; font-size: .78rem; letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 3px 12px; }
@@ -636,6 +636,17 @@
         extra: ["Tilly's Silly Jokes", "Dinosaurs, unicorns, bananas, nothing is safe. With a dramatic introduction and her signature reactions, Tilly turns every punchline into a tiny performance. Sometimes the funniest part isn't the joke. It's Tilly."],
         reminder: "Be yourself, laugh a little louder, and never be afraid to add your own sparkle!",
         tagline: "Big curls. Big expressions. An even bigger heart. That's Tilly!"
+      },
+      { id: "romi", name: "Romi", chip: "mint", img: "assets/romi-poster.webp", poster: "assets/romi-poster.webp", coloring: "romi", guest: true,
+        blurb: "Guest star! The Dino Expert from Dinosaur Land, with a fact for every dinosaur.",
+        bubbles: ["Guest star", "Dino Expert", "Lives in Dinosaur Land", "Safari hat & binoculars", "Weekly dino fact"],
+        age: "", personality: "Curious, confident & kind", sparkle: "Knowing every dinosaur by name",
+        about: ["Romi is the Dino Expert the friends meet in Dinosaur Land. Safari hat, binoculars, a compass, and a backpack full of dino facts. He drops by once a week with a new dinosaur to meet in Romi's Dino Files."],
+        special: [["Dino Expert", "Knows what every dinosaur ate, where it lived and how big it was."], ["Great guide", "Helps the friends find their way home."], ["Patient teacher", "Explains big words in small, fun ways."]],
+        favorites: [["Dinosaur", "All of them. Ask him."], ["Gear", "His binoculars and compass."], ["Snack", "Anything a herbivore would eat."]],
+        learn: "Curiosity about the natural world, and that learning facts can be an adventure.",
+        reminder: "Every big discovery starts with a small question.",
+        tagline: "Safari hat. Big heart. Even bigger dinosaurs. That's Romi!"
       }
     ],
     // tags: lumi, reign, pip, tilly, everyone, halloween. A page can carry several.
@@ -737,8 +748,8 @@
 
   document.getElementById("friend-grid").innerHTML = SITE.friends.map(f => `
     <article class="friend" id="meet-${esc(f.id)}">
-      <div class="portrait">${f.video ? `<img src="${esc(f.poster)}" alt="${esc(f.name)}"><video autoplay muted loop playsinline preload="metadata" poster="${esc(f.poster)}" aria-hidden="true"><source src="${esc(f.video)}" type="video/mp4"></video>` : `<img src="${esc(f.img)}" alt="${esc(f.name)}">`}</div>
-      <span class="chip ${esc(f.chip)}">${esc(f.name)}</span>
+      <div class="portrait">${f.video ? `<img src="${esc(f.poster)}" alt="${esc(f.name)}"><video autoplay muted loop playsinline preload="metadata" poster="${esc(f.poster)}" aria-hidden="true"><source src="${esc(f.video)}" type="video/mp4"></video>` : `<img class="framed" src="${esc(f.img)}" alt="${esc(f.name)}">`}</div>
+      <span class="chip ${esc(f.chip)}">${f.guest ? "Guest star" : esc(f.name)}</span>
       <h3>${esc(f.name)}</h3>
       <p>${esc(f.blurb)}</p>
       ${f.about ? `<button type="button" class="btn btn-ghost meet-btn" data-friend="${esc(f.id)}">Meet ${esc(f.name)}</button>` : `<span class="soon">Full profile coming soon</span>`}
@@ -750,7 +761,7 @@
     const f = SITE.friends.find(x => x.id === id); if (!f || !f.about) return;
     dlg.querySelector(".profile-body").innerHTML = `
       <div class="profile-hero">
-        <img src="assets/${esc(f.id)}-peace.webp" alt="${esc(f.name)}">
+        <img src="${f.guest ? esc(f.img) : "assets/" + esc(f.id) + "-peace.webp"}" alt="${esc(f.name)}">
         <div>
           <span class="eyebrow">Meet</span>
           <h2 class="bubble">${esc(f.name)}</h2>
