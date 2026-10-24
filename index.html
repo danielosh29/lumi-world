@@ -814,7 +814,7 @@
       <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} preview" loading="lazy"></div>
       <div class="card-body">
         <div class="tags"><span class="chip ${p.tags[0] === "party" ? "pink" : "mint"}">${esc(p.tags[0] === "party" ? "Party" : "Every day")}</span><span class="chip" style="background:var(--bg);color:var(--muted)">${esc(p.pages)}</span></div>
-        <h3>${esc(p.title)}</h3>
+        <h3><a class="plain-link" href="printables/${esc(p.file.split("/").pop().replace(".pdf", ""))}/">${esc(p.title)}</a></h3>
         <p>${esc(p.note)}</p>
         <a class="btn btn-pink" href="${esc(p.file)}?v=${PRINT_V}" target="_blank" rel="noopener" aria-label="Open PDF: ${esc(p.title)}, ${esc(p.pages)} (opens in a new tab)">Open PDF</a>
       </div>
