@@ -565,6 +565,8 @@
       { title: "Garden butterfly",       file: "assets/coloring-garden-butterfly.pdf",    preview: "assets/coloring-garden-butterfly.webp",    tags: ["everyone", "lumi", "pip", "reign"], note: "Lumi, Pip and Reign meet a butterfly in the garden. Landscape page." },
       { title: "Reign's unicorn flakes",  file: "assets/coloring-reign-unicorn-flakes.pdf", preview: "assets/coloring-reign-unicorn-flakes.webp", tags: ["reign"], note: "Breakfast time, with a unicorn headband and lots of hearts." },
       { title: "Lumi's cozy evening",     file: "assets/coloring-lumi-bedroom.pdf",        preview: "assets/coloring-lumi-bedroom.webp",        tags: ["lumi"],  note: "Drawing in her star pajamas before bed." },
+      { title: "Tilly's Joke Time",      file: "assets/coloring-tilly-joke-time.pdf",     preview: "assets/coloring-tilly-joke-time.webp",     tags: ["tilly", "corners"], note: "Medical jokes with a very sick banana. From Tilly's corner." },
+      { title: "Funny Bloopers",         file: "assets/coloring-funny-bloopers.pdf",      preview: "assets/coloring-funny-bloopers.webp",      tags: ["everyone", "lumi", "pip", "corners"], note: "Lumi and Pip, a microphone, and two tongues out." },
       { title: "All friends together",   file: "assets/coloring-friends-together.pdf", preview: "assets/coloring-friends-together.webp", tags: ["everyone", "lumi", "reign", "pip", "tilly"], note: "Lumi, Reign, Pip and Tilly under the big logo." },
       { title: "Lumi, Reign and Tilly",   file: "assets/coloring-lumi-reign-tilly.pdf",   preview: "assets/coloring-lumi-reign-tilly.webp",   tags: ["everyone", "lumi", "reign", "tilly"], note: "Peace signs, a rainbow and a sleepy cloud." },
       { title: "Lumi and Tilly's unicorn", file: "assets/coloring-lumi-tilly-unicorn.pdf", preview: "assets/coloring-lumi-tilly-unicorn.webp", tags: ["everyone", "lumi", "tilly"], note: "Best friends, a baby unicorn and a castle." },
@@ -578,7 +580,8 @@
       { id: "pip",       label: "Pip" },
       { id: "tilly",     label: "Tilly" },
       { id: "everyone",  label: "Everyone together" },
-      { id: "halloween", label: "Halloween", cls: "spooky" }
+      { id: "halloween", label: "Halloween", cls: "spooky" },
+      { id: "corners",   label: "From the Shorts" }
     ],
     corners: [
       { id: "lumi",  title: "Lumi's Morning Magic", sub: "A gentle start to the day, with Lumi.", sticker: "assets/stickers/lumi-02.webp",  url: "https://www.youtube.com/playlist?list=PLHCDpb80eMa8", chip: "lav" },
@@ -692,8 +695,8 @@
   dlg.addEventListener("close", () => { const h = location.hash.replace("#", ""); if (SITE.coloringFilters.some(f => f.id === h)) { applyFilter(h); document.getElementById("coloring").scrollIntoView({ behavior: "smooth" }); } });
   if (location.hash.startsWith("#meet-")) openProfile(location.hash.slice(6));
 
-  const TAG_LABEL = { lumi: "Lumi", reign: "Reign", pip: "Pip", tilly: "Tilly", everyone: "Everyone", halloween: "Halloween" };
-  const TAG_CLS = { lumi: "lav", reign: "pink", pip: "sky", tilly: "sun", everyone: "mint", halloween: "spooky" };
+  const TAG_LABEL = { lumi: "Lumi", reign: "Reign", pip: "Pip", tilly: "Tilly", everyone: "Everyone", halloween: "Halloween", corners: "Shorts" };
+  const TAG_CLS = { lumi: "lav", reign: "pink", pip: "sky", tilly: "sun", everyone: "mint", halloween: "spooky", corners: "" };
   document.getElementById("coloring-grid").innerHTML = SITE.coloringPages.map(p => `
     <article class="card" data-tags="${esc(p.tags.join(" "))}">
       <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} coloring page preview" loading="lazy"></div>
