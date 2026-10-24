@@ -658,6 +658,7 @@
       { title: "Lumi's cozy evening",     file: "assets/coloring-lumi-bedroom.pdf",        preview: "assets/coloring-lumi-bedroom.webp",        tags: ["lumi"],  note: "Drawing in her star pajamas before bed." },
       { title: "Tilly's Silly Jokes",    file: "assets/coloring-tilly-joke-time.pdf",     preview: "assets/coloring-tilly-joke-time.webp",     tags: ["tilly", "corners"], note: "Medical jokes with a very sick banana. From Tilly's corner." },
       { title: "Funny Bloopers",         file: "assets/coloring-funny-bloopers.pdf",      preview: "assets/coloring-funny-bloopers.webp",      tags: ["everyone", "lumi", "pip", "corners"], note: "Lumi and Pip, a microphone, and two tongues out." },
+      { title: "Romi's Dino Files: T-Rex", file: "assets/coloring-romi-dino-files-trex.pdf", preview: "assets/coloring-romi-dino-files-trex.webp", tags: ["corners", "romi"], note: "Romi the Dino Expert meets a very happy T-Rex. From episode 3 and Romi's corner." },
       { title: "All friends together",   file: "assets/coloring-friends-together.pdf", preview: "assets/coloring-friends-together.webp", tags: ["everyone", "lumi", "reign", "pip", "tilly"], note: "Lumi, Reign, Pip and Tilly under the big logo." },
       { title: "Lumi, Reign and Tilly",   file: "assets/coloring-lumi-reign-tilly.pdf",   preview: "assets/coloring-lumi-reign-tilly.webp",   tags: ["everyone", "lumi", "reign", "tilly"], note: "Peace signs, a rainbow and a sleepy cloud." },
       { title: "Lumi and Tilly's unicorn", file: "assets/coloring-lumi-tilly-unicorn.pdf", preview: "assets/coloring-lumi-tilly-unicorn.webp", tags: ["everyone", "lumi", "tilly"], note: "Best friends, a baby unicorn and a castle." },
@@ -787,8 +788,8 @@
   dlg.addEventListener("close", () => { const h = location.hash.replace("#", ""); if (SITE.coloringFilters.some(f => f.id === h)) { applyFilter(h); document.getElementById("coloring").scrollIntoView({ behavior: "smooth" }); } });
   if (location.hash.startsWith("#meet-")) openProfile(location.hash.slice(6));
 
-  const TAG_LABEL = { lumi: "Lumi", reign: "Reign", pip: "Pip", tilly: "Tilly", everyone: "Everyone", halloween: "Halloween", corners: "Shorts" };
-  const TAG_CLS = { lumi: "lav", reign: "pink", pip: "sky", tilly: "sun", everyone: "mint", halloween: "spooky", corners: "" };
+  const TAG_LABEL = { lumi: "Lumi", reign: "Reign", pip: "Pip", tilly: "Tilly", romi: "Romi", everyone: "Everyone", halloween: "Halloween", corners: "Shorts" };
+  const TAG_CLS = { lumi: "lav", reign: "pink", pip: "sky", tilly: "sun", romi: "mint", everyone: "mint", halloween: "spooky", corners: "" };
   document.getElementById("coloring-grid").innerHTML = SITE.coloringPages.map(p => `
     <article class="card" data-tags="${esc(p.tags.join(" "))}">
       <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} coloring page preview" loading="lazy" data-pin-media="https://lumimagicalworld.com/assets/pins/pin-${esc(p.file.split("/").pop().replace("coloring-", "").replace(".pdf", ""))}.jpg" data-pin-description="${esc(p.title)} · free printable coloring page from Lumi and the Magical World"></div>
