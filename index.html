@@ -245,7 +245,7 @@
 
   /* mailing list */
   .signup { position: relative; border-radius: 30px; overflow: hidden; background: var(--paper); box-shadow: var(--shadow); }
-  .signup .band { display: block; width: 100%; height: 120px; object-fit: cover; object-position: center top; }
+  .signup .band { display: block; width: 100%; height: 150px; object-fit: cover; object-position: center 35%; }
   .signup-body { padding: 24px 32px 32px; display: grid; gap: 14px; }
   .signup-art { position: absolute; right: 24px; bottom: 0; height: 320px; width: auto; max-width: 34%; pointer-events: none; }
   @media (max-width: 900px) { .signup-art { display: none; } }
@@ -406,7 +406,7 @@
 
   <section id="news">
     <div class="signup">
-      <img class="band" src="assets/clouds-strip.webp" alt="" width="1600" height="287">
+      <img class="band" src="assets/sunset-strip.webp" alt="" width="1600" height="402">
       <img class="signup-art" src="assets/lumi-pip.webp" alt="" aria-hidden="true" loading="lazy">
       <div class="signup-body">
         <span class="eyebrow">Parents' list</span>
@@ -715,7 +715,7 @@
       <div><h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">Coming soon</span></div>
     </div>`).join("");
 
-  const PRINT_V = "4";
+  const PRINT_V = "5";
   document.getElementById("print-grid").innerHTML = SITE.printables.map(p => `
     <article class="card" data-tags="${esc(p.tags.join(" "))}">
       <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} preview" loading="lazy"></div>
