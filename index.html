@@ -792,7 +792,7 @@
       <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} coloring page preview" loading="lazy" data-pin-media="https://lumimagicalworld.com/assets/pins/pin-${esc(p.file.split("/").pop().replace("coloring-", "").replace(".pdf", ""))}.jpg" data-pin-description="${esc(p.title)} · free printable coloring page from Lumi and the Magical World"></div>
       <div class="card-body">
         <div class="tags">${(p.tags.includes("everyone") ? ["everyone"].concat(p.tags.filter(t => t === "halloween")) : p.tags).map(t => `<span class="chip ${TAG_CLS[t] || ""}">${esc(TAG_LABEL[t] || t)}</span>`).join("")}</div>
-        <h3>${esc(p.title)}</h3>
+        <h3><a class="plain-link" href="coloring/${esc(p.file.split("/").pop().replace("coloring-", "").replace(".pdf", ""))}/">${esc(p.title)}</a></h3>
         <p>${esc(p.note)}</p>
         <a class="btn btn-pink" href="${esc(p.file)}" target="_blank" rel="noopener" aria-label="Open PDF: ${esc(p.title)} (opens in a new tab)">Open PDF</a>
       </div>
