@@ -306,6 +306,27 @@
     .parents { grid-template-columns: 1fr; }
     .signup-body { padding: 20px 20px 26px; }
   }
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    .card .thumb { margin: 10px; border-radius: 10px; }
+    .card-body { padding: 0 12px 14px; gap: 6px; }
+    .card-body h3 { font-size: 1rem; }
+    .card-body p { font-size: .85rem; }
+    .card .btn { padding: 8px 14px; font-size: .88rem; }
+    .card .tags .chip { font-size: .62rem; padding: 2px 7px; }
+    .friends { gap: 12px; }
+    .friend { padding: 12px 12px 16px; }
+    .friend .portrait { max-height: 220px; }
+    .friend h3 { font-size: 1.25rem; }
+    .friend p { font-size: .88rem; }
+    .corner { grid-template-columns: 90px 1fr; }
+    .corner img { height: 90px; }
+    .filters button { font-size: .88rem; padding: 7px 13px; }
+    nav ul { gap: 4px 14px; font-size: .9rem; }
+    .hero-card { margin-top: -24px; padding: 20px 16px; }
+    .songcard { padding: 8px 10px 8px 8px; gap: 10px; }
+    .songmeta { font-size: .85rem; }
+  }
   @media (prefers-reduced-motion: reduce) { .btn, .ep { transition: none; } .btn:hover, .ep:hover { transform: none; } }
 </style>
 
