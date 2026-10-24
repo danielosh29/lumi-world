@@ -530,6 +530,8 @@
     channelUrl: "https://www.youtube.com/@lumiandthemagicalworld",
     videosUrl: "https://www.youtube.com/@lumiandthemagicalworld/videos",
     contactEmail: "hello@lumimagicalworld.com",
+    // Parents' list: MailerLite embedded form endpoint (public, no secret). Form "Lumi Parents".
+    signupEndpoint: "https://assets.mailerlite.com/jsonp/2737912/forms/202176793592989071/subscribe",
     subscribers: "Over 3,000",
     friends: [
       { id: "lumi", name: "Lumi", chip: "lav", img: "assets/lumi-stand.webp", alt: "assets/lumi-sit.webp", coloring: "lumi",
@@ -892,8 +894,13 @@
     msg.hidden = false; document.getElementById("parent-email").setAttribute("aria-invalid", "false");
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.className = "err"; msg.textContent = "Please enter a valid email address."; document.getElementById("parent-email").setAttribute("aria-invalid", "true"); document.getElementById("parent-email").focus(); return; }
     if (!consent) { msg.className = "err"; msg.textContent = "Please confirm you are a parent or guardian."; return; }
-    msg.className = "toast"; msg.textContent = "Thanks! You're on the list.";
-    ev.target.reset();
+    const btn = ev.target.querySelector("button[type=submit]"); btn.disabled = true; msg.className = "toast"; msg.textContent = "Sending…";
+    const body = new URLSearchParams({ "fields[email]": email, "ml-submit": "1", "anticsrf": "true" });
+    fetch(SITE.signupEndpoint, { method: "POST", body, mode: "cors" })
+      .then(r => r.ok ? r.json().catch(() => ({})) : Promise.reject(r))
+      .then(() => { msg.textContent = "Almost done! Check your inbox and tap the confirmation link to join."; ev.target.reset(); })
+      .catch(() => { msg.className = "err"; msg.textContent = "Something went wrong. Please try again in a moment, or email " + SITE.contactEmail + "."; })
+      .finally(() => { btn.disabled = false; });
   });
 </script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4f74bf30d2654aa48943d2ab2bf50fdf"}'></script><!-- End Cloudflare Web Analytics -->
