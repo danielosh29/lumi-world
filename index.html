@@ -681,7 +681,7 @@
       { id: "reign", title: "Reign's Riddles",      sub: "Listen, look for clues, and guess!",    sticker: "assets/stickers/reign-11.webp", url: "https://www.youtube.com/playlist?list=PLI2Z2L5DgqWE", chip: "pink" },
       { id: "tilly", title: "Tilly's Silly Jokes",  sub: "Groan and giggle at the same time.",    sticker: "assets/stickers/tilly-02.webp", url: "https://www.youtube.com/playlist?list=PLfNQrpOPxQKc", chip: "sun" },
       { id: "pip",   title: "Pip's Discoveries",    sub: "Guess what Pip discovered today!",      sticker: "assets/stickers/pip-10.webp",   url: "", chip: "sky" },
-      { id: "romi",  title: "Romi's Dino Files",    sub: "Guest star! A new dinosaur fact every week.", sticker: "assets/stickers/romi-01.webp", url: "", chip: "mint", guest: true }
+      { id: "romi",  title: "Romi's Dino Files",    sub: "Guest star! A new dinosaur fact every week.", sticker: "assets/stickers/romi-01.webp", url: "https://www.youtube.com/shorts/NfaRmsJA26k", chip: "mint", guest: true }
     ],
     // tags: party, everyday, episode
     printables: [
@@ -806,7 +806,7 @@
   document.getElementById("corner-grid").innerHTML = SITE.corners.map(c => c.url ? `
     <a class="corner ${esc(c.chip)}" href="${esc(c.url)}" target="_blank" rel="noopener">
       <img src="${esc(c.sticker)}" alt="" loading="lazy">
-      <div>${c.guest ? `<span class="guest">Guest corner</span>` : ""}<h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">Watch the playlist →</span></div>
+      <div>${c.guest ? `<span class="guest">Guest corner</span>` : ""}<h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">${c.url.includes("/shorts/") ? "Watch the Short →" : "Watch the playlist →"}</span></div>
     </a>` : `
     <div class="corner ${esc(c.chip)} soon-c">
       <img src="${esc(c.sticker)}" alt="" loading="lazy">
