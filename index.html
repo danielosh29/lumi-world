@@ -25,7 +25,7 @@
     --bg: #f7f2ff;
     --paper: #ffffff;
     --ink: #3a2763;
-    --muted: #7b6b9c;
+    --muted: #5f4f86;
     --line: #e6dcf7;
     --pink: #ff9ad5;
     --sun: #ffd45e;
@@ -63,7 +63,10 @@
   h3 { font-size: 1.25rem; }
   p { margin: 0; max-width: 62ch; }
   a { color: inherit; }
-  :focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
+  :focus-visible { outline: 3px solid #c2185b; outline-offset: 3px; border-radius: 6px; }
+  .skip { position: absolute; left: 16px; top: -60px; z-index: 100; background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 12px; font-weight: 800; text-decoration: none; }
+  .skip:focus { top: 12px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
   /* bubble lettering: each letter gets its own pastel fill, white gloss and gold rim */
   .bubble { font-family: var(--display); font-weight: 700; letter-spacing: .02em; width: fit-content; max-width: 100%; line-height: 1.15;
@@ -198,7 +201,7 @@
   /* coloring shelf */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
   .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
-  .filters button { font-family: var(--display); font-weight: 600; font-size: .95rem; border: 2px solid var(--line); background: var(--paper); color: var(--muted); border-radius: 999px; padding: 8px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
+  .filters button { font-family: var(--display); font-weight: 600; font-size: .95rem; border: 2px solid var(--line); background: var(--paper); color: var(--ink); border-radius: 999px; padding: 8px 16px; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; }
   .filters button .n { font-family: var(--body); font-weight: 800; font-size: .75rem; background: var(--bg); border-radius: 999px; padding: 1px 8px; }
   .filters button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .filters button[aria-pressed="true"] .n { background: rgba(255,255,255,.18); color: inherit; }
@@ -330,6 +333,7 @@
   @media (prefers-reduced-motion: reduce) { .btn, .ep { transition: none; } .btn:hover, .ep:hover { transform: none; } }
 </style>
 
+<a class="skip" href="#main">Skip to content</a>
 <div class="wrap">
   <nav aria-label="Main">
     <a class="logo" href="#top" aria-label="Lumi home"><img src="assets/logo.webp" alt="Lumi" width="900" height="300"></a>
@@ -344,6 +348,7 @@
   </nav>
 </div>
 
+<main id="main">
 <header class="hero" id="top">
   <div class="hero-media">
     <video autoplay muted loop playsinline preload="metadata" poster="assets/hero-title.webp" aria-hidden="true">
@@ -386,18 +391,18 @@
 </header>
 
 <div class="wrap">
-  <section id="friends">
+  <section id="friends" aria-labelledby="h-friends">
     <div class="section-head">
       <span class="eyebrow">Meet the friends</span>
-      <h2 class="bubble">Who lives in the Magical World?</h2>
+      <h2 class="bubble" id="h-friends">Who lives in the Magical World?</h2>
     </div>
     <div class="friends" id="friend-grid"></div>
   </section>
 
-  <section id="coloring">
+  <section id="coloring" aria-labelledby="h-coloring">
     <div class="section-head">
       <span class="eyebrow">Print &amp; color</span>
-      <h2 class="bubble">Coloring pages</h2>
+      <h2 class="bubble" id="h-coloring">Coloring pages</h2>
       <p>Letter-size PDFs, ready to print at home or in class. Pick a friend, or grab the whole gang. New pages arrive with each episode.</p>
       <img class="peek" src="assets/pip-unicorn.webp" alt="" aria-hidden="true" loading="lazy">
     </div>
@@ -405,10 +410,10 @@
     <div class="grid" id="coloring-grid"></div>
   </section>
 
-  <section id="printables">
+  <section id="printables" aria-labelledby="h-print">
     <div class="section-head">
       <span class="eyebrow">Print, cut &amp; celebrate</span>
-      <h2 class="bubble">Party kit &amp; printables</h2>
+      <h2 class="bubble" id="h-print">Party kit &amp; printables</h2>
       <p>Everything for a Lumi birthday, free to print at home. Letter size. More printables arrive every few weeks.</p>
       <img class="peek" src="assets/lumi-tilly.webp" alt="" aria-hidden="true" loading="lazy">
     </div>
@@ -416,19 +421,19 @@
     <div class="grid" id="print-grid"></div>
   </section>
 
-  <section id="corners">
+  <section id="corners" aria-labelledby="h-corners">
     <div class="section-head">
       <span class="eyebrow">Shorts between episodes</span>
-      <h2 class="bubble">The friends' little corners</h2>
+      <h2 class="bubble" id="h-corners">The friends' little corners</h2>
       <p>Quick Shorts on YouTube, one corner per friend. Perfect for a two-minute break.</p>
     </div>
     <div class="corners" id="corner-grid"></div>
   </section>
 
-  <section id="episodes">
+  <section id="episodes" aria-labelledby="h-episodes">
     <div class="section-head">
       <span class="eyebrow">Season one</span>
-      <h2 class="bubble">Watch the episodes</h2>
+      <h2 class="bubble" id="h-episodes">Watch the episodes</h2>
       <p>Each episode runs ten to fifteen minutes and follows one adventure. Between episodes, the channel is full of Shorts: Lumi's Morning Magic, Reign's Riddles, Tilly's Silly Jokes, Pip's Discoveries, and favorite moments from the episodes.</p>
     </div>
     <div class="episodes" id="episode-list"></div>
@@ -443,10 +448,10 @@
     </div>
   </section>
 
-  <section id="parents">
+  <section id="parents" aria-labelledby="h-parents">
     <div class="section-head">
       <span class="eyebrow">For grown-ups</span>
-      <h2 class="bubble">What the series is about</h2>
+      <h2 class="bubble" id="h-parents">What the series is about</h2>
     </div>
     <div class="parents">
       <img class="parents-art" src="assets/girls-hug.webp" alt="Lumi, Reign and Tilly" loading="lazy">
@@ -471,25 +476,26 @@
     </div>
   </section>
 
-  <section id="news">
+  <section id="news" aria-labelledby="h-news">
     <div class="signup">
       <img class="band" src="assets/sunset-strip.webp" alt="" width="1600" height="402">
       <img class="signup-art" src="assets/lumi-pip.webp" alt="" aria-hidden="true" loading="lazy">
       <div class="signup-body">
         <span class="eyebrow">Parents' list</span>
-        <h2 class="bubble">New pages and episodes by email</h2>
+        <h2 class="bubble" id="h-news">New pages and episodes by email</h2>
         <p style="color:var(--muted)">One short email when a new episode or coloring pack is out. Nothing else.</p>
         <form id="signup-form" novalidate>
           <label for="parent-email">Your email</label>
-          <input type="email" id="parent-email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          <input type="email" id="parent-email" name="email" placeholder="you@example.com" autocomplete="email" required aria-describedby="signup-msg">
           <label class="consent"><input type="checkbox" id="parent-consent" required> I am a parent or guardian, eighteen or older, and I agree to receive emails about Lumi and the Magical World.</label>
           <div><button class="btn btn-sun" type="submit">Join the list</button></div>
-          <div id="signup-msg" hidden></div>
+          <div id="signup-msg" role="status" aria-live="polite" hidden></div>
         </form>
       </div>
     </div>
   </section>
 
+</main>
   <div class="player" id="player" hidden>
     <button type="button" class="pbtn" id="play-btn" aria-label="Play Lumi's song" aria-pressed="false">
       <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
@@ -500,6 +506,7 @@
       <span class="pwave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
     </div>
     <img class="pstar" src="assets/stickers/lumi-02.webp" alt="" aria-hidden="true">
+    <span class="sr" id="song-status" role="status" aria-live="polite"></span>
     <audio id="song" preload="none" loop><source src="assets/lumi-song.mp3" type="audio/mpeg"></audio>
   </div>
 
@@ -512,7 +519,7 @@
     <img src="assets/logo.webp" alt="Lumi">
     <p><b>Lumi and the Magical World</b> · story, visuals &amp; music by Danielle Iv · © <span id="year"></span> All rights reserved.</p>
     <p>Lumi, Pip, Reign, Tilly and all artwork are original characters. Coloring pages are free for personal, classroom and home use.</p>
-    <p><a href="privacy.html">Privacy</a> · <a href="#parents">Contact</a></p>
+    <p><a href="privacy.html">Privacy &amp; accessibility</a> · <a href="#parents">Contact</a></p>
   </footer>
 </div>
 
@@ -768,7 +775,8 @@
         <a class="btn btn-pink" href="#${esc(f.coloring)}" data-close>Color ${esc(f.name)}</a>
       </div>`;
     bubblify(dlg);
-    dlg.showModal();
+    dlg.setAttribute("aria-label", "About " + f.name);
+    dlg.showModal(); dlg.querySelector(".close").focus();
   }
   document.getElementById("friend-grid").addEventListener("click", ev => { const b = ev.target.closest(".meet-btn"); if (b) openProfile(b.dataset.friend); });
   dlg.addEventListener("click", ev => { if (ev.target === dlg || ev.target.closest("[data-close]")) { dlg.close(); } });
@@ -785,7 +793,7 @@
         <div class="tags">${(p.tags.includes("everyone") ? ["everyone"].concat(p.tags.filter(t => t === "halloween")) : p.tags).map(t => `<span class="chip ${TAG_CLS[t] || ""}">${esc(TAG_LABEL[t] || t)}</span>`).join("")}</div>
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.note)}</p>
-        <a class="btn btn-pink" href="${esc(p.file)}" target="_blank" rel="noopener">Open PDF</a>
+        <a class="btn btn-pink" href="${esc(p.file)}" target="_blank" rel="noopener" aria-label="Open PDF: ${esc(p.title)} (opens in a new tab)">Open PDF</a>
       </div>
     </article>`).join("");
 
@@ -807,7 +815,7 @@
         <div class="tags"><span class="chip ${p.tags[0] === "party" ? "pink" : "mint"}">${esc(p.tags[0] === "party" ? "Party" : "Every day")}</span><span class="chip" style="background:var(--bg);color:var(--muted)">${esc(p.pages)}</span></div>
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.note)}</p>
-        <a class="btn btn-pink" href="${esc(p.file)}?v=${PRINT_V}" target="_blank" rel="noopener">Open PDF</a>
+        <a class="btn btn-pink" href="${esc(p.file)}?v=${PRINT_V}" target="_blank" rel="noopener" aria-label="Open PDF: ${esc(p.title)}, ${esc(p.pages)} (opens in a new tab)">Open PDF</a>
       </div>
     </article>`).join("");
 
@@ -864,7 +872,9 @@
   const toggle = () => { if (song.paused) { song.play().catch(() => {}); } else { song.pause(); } };
   playUIs.forEach(([, k]) => k.addEventListener("click", toggle));
   const setState = on => playUIs.forEach(([b, k]) => { b.classList.toggle("playing", on); k.setAttribute("aria-pressed", String(on)); k.setAttribute("aria-label", (on ? "Pause" : "Play") + " Lumi's song"); });
-  song.addEventListener("play", () => setState(true)); song.addEventListener("pause", () => setState(false));
+  const songStatus = document.getElementById("song-status");
+  song.addEventListener("play", () => { setState(true); songStatus.textContent = "Lumi's song is playing."; });
+  song.addEventListener("pause", () => { setState(false); songStatus.textContent = "Lumi's song is paused."; });
   // the floating player appears once the song is playing or the hero card has scrolled away
   const heroCard = document.querySelector(".songcard");
   const floater = document.getElementById("player");
@@ -878,8 +888,8 @@
     const email = document.getElementById("parent-email").value.trim();
     const consent = document.getElementById("parent-consent").checked;
     const msg = document.getElementById("signup-msg");
-    msg.hidden = false;
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.className = "err"; msg.textContent = "Please enter a valid email address."; return; }
+    msg.hidden = false; document.getElementById("parent-email").setAttribute("aria-invalid", "false");
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.className = "err"; msg.textContent = "Please enter a valid email address."; document.getElementById("parent-email").setAttribute("aria-invalid", "true"); document.getElementById("parent-email").focus(); return; }
     if (!consent) { msg.className = "err"; msg.textContent = "Please confirm you are a parent or guardian."; return; }
     msg.className = "toast"; msg.textContent = "Thanks! You're on the list.";
     ev.target.reset();
