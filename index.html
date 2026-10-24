@@ -147,7 +147,7 @@
   .hero-friends img:nth-child(3) { height: 230px; position: relative; z-index: 1; }
 
   /* friends */
-  .friends { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 18px; }
+  .friends { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
   .friend { background: var(--paper); border-radius: 26px; padding: 18px 18px 22px; box-shadow: var(--shadow); display: grid; gap: 8px; justify-items: center; text-align: center; min-width: 0; }
   .friend .portrait { position: relative; width: 100%; aspect-ratio: 9 / 13; max-height: 300px; border-radius: 18px; overflow: hidden; background: #fff; }
   .friend .portrait video, .friend .portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center top; }
@@ -199,6 +199,8 @@
   .more-body { padding: 4px 18px 18px; display: grid; gap: 12px; }
   @media (max-width: 600px) { .profile-hero { grid-template-columns: 1fr; } .profile-hero img { height: 200px; } .facts div, .list .row { grid-template-columns: 1fr; gap: 2px; } .profile-body { padding: 22px 18px 26px; } }
 
+  .more-friends { margin-top: 18px; color: var(--muted); text-align: center; max-width: none; }
+  .linkish { background: none; border: 0; padding: 0; font: inherit; font-weight: 800; color: var(--ink); text-decoration: underline; cursor: pointer; }
   /* coloring shelf */
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 20px; }
   .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
@@ -399,6 +401,7 @@
       <h2 class="bubble" id="h-friends">Who lives in the Magical World?</h2>
     </div>
     <div class="friends" id="friend-grid"></div>
+    <p class="more-friends">Plus guest stars and family along the way, like <button type="button" class="linkish meet-btn" data-friend="romi">Romi the Dino Expert</button>. A full cast page is coming.</p>
   </section>
 
   <section id="coloring" aria-labelledby="h-coloring">
@@ -746,7 +749,7 @@
   document.getElementById("contact-email").textContent = SITE.contactEmail;
   document.getElementById("year").textContent = new Date().getFullYear();
 
-  document.getElementById("friend-grid").innerHTML = SITE.friends.map(f => `
+  document.getElementById("friend-grid").innerHTML = SITE.friends.filter(f => !f.guest).map(f => `
     <article class="friend" id="meet-${esc(f.id)}">
       <div class="portrait">${f.video ? `<img src="${esc(f.poster)}" alt="${esc(f.name)}"><video autoplay muted loop playsinline preload="metadata" poster="${esc(f.poster)}" aria-hidden="true"><source src="${esc(f.video)}" type="video/mp4"></video>` : `<img class="framed" src="${esc(f.img)}" alt="${esc(f.name)}">`}</div>
       <span class="chip ${esc(f.chip)}">${f.guest ? "Guest star" : esc(f.name)}</span>
@@ -795,7 +798,7 @@
     dlg.setAttribute("aria-label", "About " + f.name);
     dlg.showModal(); dlg.querySelector(".close").focus();
   }
-  document.getElementById("friend-grid").addEventListener("click", ev => { const b = ev.target.closest(".meet-btn"); if (b) openProfile(b.dataset.friend); });
+  document.getElementById("friends").addEventListener("click", ev => { const b = ev.target.closest(".meet-btn"); if (b) openProfile(b.dataset.friend); });
   dlg.addEventListener("click", ev => { if (ev.target === dlg || ev.target.closest("[data-close]")) { dlg.close(); } });
   dlg.querySelector("[data-close]").addEventListener("click", () => dlg.close());
   dlg.addEventListener("close", () => { const h = location.hash.replace("#", ""); if (SITE.coloringFilters.some(f => f.id === h)) { applyFilter(h); document.getElementById("coloring").scrollIntoView({ behavior: "smooth" }); } });
