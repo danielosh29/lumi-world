@@ -224,7 +224,8 @@
   /* corners */
   .corners { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
   .corner { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; padding: 16px; border-radius: 24px; text-decoration: none; color: var(--ink); background: var(--paper); box-shadow: var(--shadow); border-top: 6px solid var(--c); transition: transform .15s ease; min-width: 0; }
-  .corner.lav { --c: var(--lav); } .corner.pink { --c: var(--pink); } .corner.sun { --c: var(--sun); } .corner.sky { --c: var(--sky); }
+  .corner.lav { --c: var(--lav); } .corner.pink { --c: var(--pink); } .corner.sun { --c: var(--sun); } .corner.sky { --c: var(--sky); } .corner.mint { --c: var(--mint); }
+  .corner .guest { display: inline-block; font-family: var(--display); font-weight: 600; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; background: var(--mint); color: var(--mint-ink); border-radius: 999px; padding: 2px 9px; margin-bottom: 4px; }
   .corner img { height: 110px; width: auto; max-width: 100%; justify-self: center; }
   .corner h3 { font-size: 1.15rem; }
   .corner p { color: var(--muted); font-size: .92rem; margin-top: 2px; }
@@ -435,7 +436,7 @@
     <div class="section-head">
       <span class="eyebrow">Season one</span>
       <h2 class="bubble" id="h-episodes">Watch the episodes</h2>
-      <p>Each episode runs ten to fifteen minutes and follows one adventure. Between episodes, the channel is full of Shorts: Lumi's Morning Magic, Reign's Riddles, Tilly's Silly Jokes, Pip's Discoveries, and favorite moments from the episodes.</p>
+      <p>Each episode runs ten to fifteen minutes and follows one adventure. Between episodes, the channel is full of Shorts: Lumi's Morning Magic, Reign's Riddles, Tilly's Silly Jokes, Pip's Discoveries, a weekly dino fact from guest star Romi, and favorite moments from the episodes.</p>
     </div>
     <div class="episodes" id="episode-list"></div>
     <div class="band">
@@ -679,7 +680,8 @@
       { id: "lumi",  title: "Lumi's Morning Magic", sub: "A gentle start to the day, with Lumi.", sticker: "assets/stickers/lumi-02.webp",  url: "https://www.youtube.com/playlist?list=PLHCDpb80eMa8", chip: "lav" },
       { id: "reign", title: "Reign's Riddles",      sub: "Listen, look for clues, and guess!",    sticker: "assets/stickers/reign-11.webp", url: "https://www.youtube.com/playlist?list=PLI2Z2L5DgqWE", chip: "pink" },
       { id: "tilly", title: "Tilly's Silly Jokes",  sub: "Groan and giggle at the same time.",    sticker: "assets/stickers/tilly-02.webp", url: "https://www.youtube.com/playlist?list=PLfNQrpOPxQKc", chip: "sun" },
-      { id: "pip",   title: "Pip's Discoveries",    sub: "Guess what Pip discovered today!",      sticker: "assets/stickers/pip-10.webp",   url: "", chip: "sky" }
+      { id: "pip",   title: "Pip's Discoveries",    sub: "Guess what Pip discovered today!",      sticker: "assets/stickers/pip-10.webp",   url: "", chip: "sky" },
+      { id: "romi",  title: "Romi's Dino Files",    sub: "Guest star! A new dinosaur fact every week.", sticker: "assets/stickers/romi-01.webp", url: "", chip: "mint", guest: true }
     ],
     // tags: party, everyday, episode
     printables: [
@@ -804,11 +806,11 @@
   document.getElementById("corner-grid").innerHTML = SITE.corners.map(c => c.url ? `
     <a class="corner ${esc(c.chip)}" href="${esc(c.url)}" target="_blank" rel="noopener">
       <img src="${esc(c.sticker)}" alt="" loading="lazy">
-      <div><h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">Watch the playlist →</span></div>
+      <div>${c.guest ? `<span class="guest">Guest corner</span>` : ""}<h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">Watch the playlist →</span></div>
     </a>` : `
     <div class="corner ${esc(c.chip)} soon-c">
       <img src="${esc(c.sticker)}" alt="" loading="lazy">
-      <div><h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">Coming soon</span></div>
+      <div>${c.guest ? `<span class="guest">Guest corner</span>` : ""}<h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">Coming soon</span></div>
     </div>`).join("");
 
   const PRINT_V = "6";
