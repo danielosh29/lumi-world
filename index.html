@@ -684,7 +684,7 @@
     printables: [
       { title: "Happy Birthday banner",  file: "assets/print/birthday-banner.pdf",        preview: "assets/print/birthday-banner.webp",        tags: ["party"], pages: "13 pages", note: "One letter per flag, pastel sky and bubble letters. Cut, punch and string." },
       { title: "Cupcake & cake toppers", file: "assets/print/cupcake-cake-toppers.pdf",   preview: "assets/print/cupcake-cake-toppers.webp",   tags: ["party"], pages: "2 pages",  note: "Twelve cupcake circles and one big cake topper." },
-      { title: "Party invitation",       file: "assets/print/party-invitation.pdf",       preview: "assets/print/party-invitation.webp",       tags: ["party"], pages: "1 page",   note: "Five by seven inches, fill in by hand. Fits a standard envelope." },
+      { title: "Party invitation",       file: "assets/print/party-invitation.pdf",       preview: "assets/print/party-invitation.webp",       tags: ["party"], pages: "1 page",   note: "Full-page invitation, fill in by hand. Letter size." },
       { title: "Name tags",              file: "assets/print/name-tags.pdf",              preview: "assets/print/name-tags.webp",              tags: ["party"], pages: "1 page",   note: "Eight tags, two of each friend." },
       { title: "How do I feel today?",  file: "assets/print/feelings-chart.pdf",   preview: "assets/print/feelings-chart.webp",   tags: ["everyday"], pages: "1 page",  note: "Twelve feelings with Lumi, Pip, Reign and Tilly. Point, color, or stick." },
       { title: "Sticker sheets",        file: "assets/print/sticker-sheets.pdf",   preview: "assets/print/sticker-sheets.webp",   tags: ["everyday"], pages: "4 pages", note: "Lumi, Pip, Reign and Tilly. Print on sticker paper and cut around the white edges." },
@@ -810,7 +810,7 @@
       <div><h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">Coming soon</span></div>
     </div>`).join("");
 
-  const PRINT_V = "5";
+  const PRINT_V = "6";
   document.getElementById("print-grid").innerHTML = SITE.printables.map(p => `
     <article class="card" data-tags="${esc(p.tags.join(" "))}">
       <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} preview" loading="lazy"></div>
