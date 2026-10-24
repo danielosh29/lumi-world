@@ -166,11 +166,10 @@
   .friend .meet-btn { padding: 9px 18px; font-size: .95rem; margin-top: 4px; }
   .friend .soon { font-size: .8rem; font-weight: 800; color: var(--muted); margin-top: 8px; }
   /* profile dialog */
-  .profile { border: 0; border-radius: 30px; padding: 0; width: min(760px, calc(100% - 32px)); height: auto; max-height: min(calc(100dvh - 32px), calc(100% - 32px)); background: var(--paper); color: var(--ink); box-shadow: 0 30px 80px rgba(30, 15, 70, .35); overflow: hidden; display: flex; flex-direction: column; }
-  .profile[open] { display: flex; }
-  .profile::backdrop { background: rgba(26, 21, 56, .6); backdrop-filter: blur(4px); }
+  .profile { border: 0; border-radius: 30px; padding: 0; width: min(760px, calc(100% - 32px)); max-height: calc(100dvh - 32px); background: var(--paper); color: var(--ink); box-shadow: 0 30px 80px rgba(30, 15, 70, .35); overflow: hidden; }
   .profile .close { position: absolute; top: 14px; right: 14px; width: 40px; height: 40px; border-radius: 50%; border: 0; background: var(--bg); color: var(--ink); font-size: 1.5rem; line-height: 1; cursor: pointer; z-index: 2; }
-  .profile-body { padding: 28px 32px 32px; display: flex; flex-direction: column; gap: 14px; overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; flex: 1 1 auto; min-height: 0; max-height: none; padding-bottom: calc(32px + env(safe-area-inset-bottom, 0px)); }
+  .profile-body { display: block; padding: 28px 32px calc(32px + env(safe-area-inset-bottom, 0px)); overflow-y: auto; -webkit-overflow-scrolling: touch; overscroll-behavior: contain; max-height: calc(100dvh - 32px); }
+  .profile-body > * + * { margin-top: 14px; }
   .profile-hero { display: grid; grid-template-columns: 170px 1fr; gap: 20px; align-items: center; }
   .profile-hero img { height: 260px; width: auto; max-width: 100%; justify-self: center; filter: drop-shadow(0 10px 14px rgba(58, 39, 99, .22)); }
   .profile-hero > div { display: grid; gap: 10px; min-width: 0; }
@@ -180,7 +179,6 @@
   .facts b, .list b { color: var(--ink); font-weight: 800; }
   .facts span, .list span, .profile-body p { color: var(--muted); }
   .profile-body h3 { font-family: var(--display); font-weight: 600; font-size: 1.2rem; margin-top: 8px; }
-  .profile-body > * { flex: none; }
   .list { display: grid; gap: 8px; }
   .list .row { background: var(--bg); border-radius: 14px; padding: 10px 14px; }
   .profile-body blockquote { margin: 8px 0 0; padding: 18px 22px; border-radius: 20px; background: linear-gradient(100deg, var(--pink), var(--sun) 35%, var(--sky) 68%, var(--lav)); color: #2d1358; font-family: var(--display); font-weight: 600; font-size: 1.25rem; display: grid; gap: 6px; }
@@ -193,14 +191,14 @@
   .bubbles { display: flex; flex-wrap: wrap; gap: 8px; }
   .bub { font-family: var(--display); font-weight: 600; font-size: .95rem; padding: 8px 16px; border-radius: 999px; color: #2d1358; box-shadow: inset 0 -3px 0 rgba(0,0,0,.08), 0 3px 0 rgba(0,0,0,.06); transform: rotate(var(--r, 0deg)); }
   .bub.c0 { background: var(--lav); --r: -1.5deg; } .bub.c1 { background: var(--sun); --r: 1deg; } .bub.c2 { background: var(--pink); --r: -0.5deg; } .bub.c3 { background: var(--sky); --r: 1.5deg; } .bub.c4 { background: var(--mint); --r: -1deg; }
-  .more { border: 2px solid var(--line); border-radius: 18px; padding: 0; overflow: visible; flex: none; min-height: 0; }
+  .more { border: 2px solid var(--line); border-radius: 18px; padding: 0; display: block; }
   .more summary { min-height: 48px; }
-  .more[open] .more-body { display: grid; }
+  .more-body > * + * { margin-top: 12px; }
   .more summary { cursor: pointer; font-family: var(--display); font-weight: 600; font-size: 1.05rem; padding: 14px 18px; list-style: none; display: flex; justify-content: space-between; align-items: center; }
   .more summary::-webkit-details-marker { display: none; }
   .more summary::after { content: "+"; font-size: 1.4rem; color: var(--muted); }
   .more[open] summary::after { content: "–"; }
-  .more-body { padding: 4px 18px 18px; display: grid; gap: 12px; }
+  .more-body { padding: 4px 18px 18px; display: block; }
   @media (max-width: 600px) { .profile-hero { grid-template-columns: 1fr; } .profile-hero img { height: 200px; } .facts div, .list .row { grid-template-columns: 1fr; gap: 2px; } .profile-body { padding: 22px 18px 26px; } }
 
   .more-friends { margin-top: 18px; color: var(--muted); text-align: center; max-width: none; }
