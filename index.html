@@ -715,6 +715,7 @@
       <div><h3>${esc(c.title)}</h3><p>${esc(c.sub)}</p><span class="go">Coming soon</span></div>
     </div>`).join("");
 
+  const PRINT_V = "4";
   document.getElementById("print-grid").innerHTML = SITE.printables.map(p => `
     <article class="card" data-tags="${esc(p.tags.join(" "))}">
       <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} preview" loading="lazy"></div>
@@ -722,7 +723,7 @@
         <div class="tags"><span class="chip ${p.tags[0] === "party" ? "pink" : "mint"}">${esc(p.tags[0] === "party" ? "Party" : "Every day")}</span><span class="chip" style="background:var(--bg);color:var(--muted)">${esc(p.pages)}</span></div>
         <h3>${esc(p.title)}</h3>
         <p>${esc(p.note)}</p>
-        <a class="btn btn-pink" href="${esc(p.file)}" target="_blank" rel="noopener">Open PDF</a>
+        <a class="btn btn-pink" href="${esc(p.file)}?v=${PRINT_V}" target="_blank" rel="noopener">Open PDF</a>
       </div>
     </article>`).join("");
 
