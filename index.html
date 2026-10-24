@@ -789,7 +789,7 @@
   const TAG_CLS = { lumi: "lav", reign: "pink", pip: "sky", tilly: "sun", everyone: "mint", halloween: "spooky", corners: "" };
   document.getElementById("coloring-grid").innerHTML = SITE.coloringPages.map(p => `
     <article class="card" data-tags="${esc(p.tags.join(" "))}">
-      <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} coloring page preview" loading="lazy"></div>
+      <div class="thumb"><img src="${esc(p.preview)}" alt="${esc(p.title)} coloring page preview" loading="lazy" data-pin-media="https://lumimagicalworld.com/assets/pins/pin-${esc(p.file.split("/").pop().replace("coloring-", "").replace(".pdf", ""))}.jpg" data-pin-description="${esc(p.title)} · free printable coloring page from Lumi and the Magical World"></div>
       <div class="card-body">
         <div class="tags">${(p.tags.includes("everyone") ? ["everyone"].concat(p.tags.filter(t => t === "halloween")) : p.tags).map(t => `<span class="chip ${TAG_CLS[t] || ""}">${esc(TAG_LABEL[t] || t)}</span>`).join("")}</div>
         <h3>${esc(p.title)}</h3>
