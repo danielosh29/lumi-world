@@ -126,6 +126,16 @@
   .hero-copy p { color: var(--muted); font-size: 1.1rem; }
   .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
   .stat { font-family: var(--display); color: var(--muted); font-size: .95rem; }
+  .songcard { display: flex; align-items: center; gap: 12px; padding: 10px 14px 10px 10px; border-radius: 18px; background: var(--bg); border: 2px solid var(--line); max-width: 560px; }
+  .songcard .pbtn { flex: none; }
+  .songmeta { display: grid; gap: 2px; min-width: 0; font-size: .92rem; color: var(--muted); }
+  .songmeta b { color: var(--ink); font-weight: 800; }
+  .songmeta a { font-weight: 800; color: var(--ink); }
+  .songcard .pwave { margin-left: auto; }
+  .songcard.playing .pbtn .ic-play { display: none; } .songcard.playing .pbtn .ic-pause { display: block; }
+  .songcard.playing .pwave i { animation: wave .9s ease-in-out infinite; }
+  .songcard.playing .pwave i:nth-child(2) { animation-delay: .15s; background: var(--sun); } .songcard.playing .pwave i:nth-child(3) { animation-delay: .3s; background: var(--sky); } .songcard.playing .pwave i:nth-child(4) { animation-delay: .45s; background: var(--lav); } .songcard.playing .pwave i:nth-child(5) { animation-delay: .6s; background: var(--mint); }
+  @media (max-width: 600px) { .songcard .pwave { display: none; } }
   .stat b { color: var(--ink); font-weight: 600; }
   .hero-friends { display: flex; align-items: flex-end; justify-content: center; gap: 0; min-width: 0; }
   .hero-friends img { height: 250px; width: auto; max-width: 100%; margin-inline: -18px; filter: drop-shadow(0 10px 14px rgba(58, 39, 99, .22)); }
@@ -258,6 +268,7 @@
   .err { color: #c2185b; font-weight: 800; }
 
   /* song player */
+  .player[hidden] { display: none; }
   .player { position: fixed; left: max(16px, env(safe-area-inset-left, 0px)); bottom: calc(16px + env(safe-area-inset-bottom, 0px)); z-index: 20;
     display: flex; align-items: center; gap: 10px; padding: 8px 14px 8px 8px; border-radius: 999px; background: var(--paper); box-shadow: var(--shadow); border: 2px solid var(--line); }
   .pbtn { width: 44px; height: 44px; border-radius: 50%; border: 0; cursor: pointer; display: grid; place-items: center; color: #4a3300;
@@ -330,6 +341,17 @@
           Watch on YouTube
         </a>
         <a class="btn btn-pink" href="#coloring">Get coloring pages</a>
+      </div>
+      <div class="songcard" id="song-hero">
+        <button type="button" class="pbtn" id="play-btn-hero" aria-label="Play Lumi's song">
+          <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
+          <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+        </button>
+        <div class="songmeta">
+          <b>Play Lumi's Song while you browse</b>
+          <span>Fifty seconds of magic, on a loop. <a href="https://www.youtube.com/watch?v=jh299DiRt9Y" target="_blank" rel="noopener">Watch the music video on YouTube →</a></span>
+        </div>
+        <span class="pwave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       </div>
       <div class="stat"><b id="sub-count">3,500</b> families already watch along</div>
     </div>
@@ -447,7 +469,7 @@
     </div>
   </section>
 
-  <div class="player" id="player">
+  <div class="player" id="player" hidden>
     <button type="button" class="pbtn" id="play-btn" aria-label="Play Lumi's song" aria-pressed="false">
       <svg class="ic-play" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M8 5v14l11-7z"/></svg>
       <svg class="ic-pause" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
@@ -816,10 +838,17 @@
     </a>`).join("");
 
   // Song player
-  const song = document.getElementById("song"), player = document.getElementById("player"), playBtn = document.getElementById("play-btn");
-  playBtn.addEventListener("click", () => { if (song.paused) { song.play().catch(() => {}); } else { song.pause(); } });
-  song.addEventListener("play", () => { player.classList.add("playing"); playBtn.setAttribute("aria-pressed", "true"); playBtn.setAttribute("aria-label", "Pause Lumi's song"); });
-  song.addEventListener("pause", () => { player.classList.remove("playing"); playBtn.setAttribute("aria-pressed", "false"); playBtn.setAttribute("aria-label", "Play Lumi's song"); });
+  const song = document.getElementById("song");
+  const playUIs = [["player", "play-btn"], ["song-hero", "play-btn-hero"]].map(([box, btn]) => [document.getElementById(box), document.getElementById(btn)]).filter(([b, k]) => b && k);
+  const toggle = () => { if (song.paused) { song.play().catch(() => {}); } else { song.pause(); } };
+  playUIs.forEach(([, k]) => k.addEventListener("click", toggle));
+  const setState = on => playUIs.forEach(([b, k]) => { b.classList.toggle("playing", on); k.setAttribute("aria-pressed", String(on)); k.setAttribute("aria-label", (on ? "Pause" : "Play") + " Lumi's song"); });
+  song.addEventListener("play", () => setState(true)); song.addEventListener("pause", () => setState(false));
+  // the floating player appears once the song is playing or the hero card has scrolled away
+  const heroCard = document.querySelector(".songcard");
+  const floater = document.getElementById("player");
+  const io = new IntersectionObserver(([e]) => { floater.hidden = e.isIntersecting && song.paused; }, { threshold: 0 });
+  io.observe(heroCard); song.addEventListener("play", () => { floater.hidden = false; });
   document.querySelectorAll("video").forEach(v => v.muted = true);
 
   // Mailing list: wire this to your email service (the form posts nowhere yet).
