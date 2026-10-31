@@ -1,0 +1,27 @@
+name: Fetch video info
+on:
+  workflow_dispatch:
+    inputs:
+      video:
+        description: YouTube video id
+        required: true
+permissions:
+  contents: write
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download title and thumbnail
+        run: |
+          mkdir -p .yt
+          curl -sSL "https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${{ inputs.video }}&format=json" -o ".yt/${{ inputs.video }}.json"
+          curl -sSL -o ".yt/${{ inputs.video }}.jpg" "https://i.ytimg.com/vi/${{ inputs.video }}/maxresdefault.jpg" || true
+          [ -s ".yt/${{ inputs.video }}.jpg" ] || curl -sSL -o ".yt/${{ inputs.video }}.jpg" "https://i.ytimg.com/vi/${{ inputs.video }}/hqdefault.jpg"
+          cat ".yt/${{ inputs.video }}.json"
+      - name: Commit
+        run: |
+          git config user.name "lumi-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add .yt
+          git commit -m "Fetch video info ${{ inputs.video }}" && git push
