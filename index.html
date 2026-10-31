@@ -748,6 +748,9 @@
   document.getElementById("yt-band").href = SITE.channelUrl + "?sub_confirmation=1";
   document.getElementById("yt-shorts").href = SITE.channelUrl + "/shorts";
   document.getElementById("sub-count").textContent = SITE.subscribers;
+  fetch("assets/subs.json?v=" + Date.now()).then(r => r.ok ? r.json() : null).then(d => {
+    if (d && /^[\d,]+\+$/.test(d.label || "")) document.getElementById("sub-count").textContent = d.label;
+  }).catch(() => {});
   document.getElementById("contact-email").textContent = SITE.contactEmail;
   document.getElementById("year").textContent = new Date().getFullYear();
 
