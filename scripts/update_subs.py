@@ -40,8 +40,8 @@ def main():
     if count < 1000 or (prev.get("count") and count < prev["count"] * 0.7):
         sys.exit(f"implausible count {count} (previous {prev.get('count')}); leaving file untouched")
     label = label_for(count)
-    if label == prev.get("label"):
-        print("label unchanged:", label); return
+    if count == prev.get("count"):
+        print("count unchanged:", count); return
     json.dump({"count": count, "label": label,
                "updated": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")},
               open(OUT, "w"), indent=2)
