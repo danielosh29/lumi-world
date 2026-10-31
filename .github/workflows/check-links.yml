@@ -1,0 +1,26 @@
+name: Check YouTube links
+on:
+  workflow_dispatch:
+    inputs:
+      ids:
+        description: Space-separated playlist ids
+        required: true
+permissions:
+  contents: write
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Query oEmbed for each id
+        run: |
+          mkdir -p .yt; : > .yt/check.txt
+          for id in ${{ inputs.ids }}; do
+            code=$(curl -sS -o /tmp/o.json -w "%{http_code}" "https://www.youtube.com/oembed?url=https://www.youtube.com/playlist?list=$id&format=json")
+            echo "$id $code $(cat /tmp/o.json | head -c 300)" >> .yt/check.txt
+          done
+          cat .yt/check.txt
+      - name: Commit
+        run: |
+          git config user.name "lumi-bot"; git config user.email "actions@users.noreply.github.com"
+          git add .yt; git commit -m "Link check" && git push
