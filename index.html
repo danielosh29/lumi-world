@@ -381,7 +381,7 @@
         </button>
         <div class="songmeta">
           <b>Play Lumi's Song while you browse</b>
-          <span>Fifty seconds of magic, on a loop. <a href="https://www.youtube.com/watch?v=jh299DiRt9Y" target="_blank" rel="noopener">Watch the music video on YouTube →</a></span>
+          <span>Fifty seconds of magic, on a loop. <a href="https://www.youtube.com/watch?v=jh299DiRt9Y" target="_blank" rel="noopener">Watch the music video →</a> · <a href="https://www.youtube.com/playlist?list=PLC_vE81fvLKM" target="_blank" rel="noopener">More songs &amp; sing-alongs →</a></span>
         </div>
         <span class="pwave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       </div>
@@ -444,6 +444,7 @@
       <p>Each episode runs ten to fifteen minutes and follows one adventure. Between episodes, the channel is full of Shorts: Lumi's Morning Magic, Reign's Riddles, Tilly's Silly Jokes, Pip's Discoveries, a weekly dino fact from guest star Romi, and favorite moments from the episodes.</p>
     </div>
     <div class="episodes" id="episode-list"></div>
+    <p class="more-friends">Want them all in a row? <a class="btn btn-sun" style="margin-left:6px" href="https://www.youtube.com/playlist?list=PLdhR3yR-iSMY" target="_blank" rel="noopener">Play all episodes on YouTube →</a></p>
     <div class="band">
       <video autoplay muted loop playsinline preload="metadata" poster="assets/og-image.jpg" aria-hidden="true">
         <source src="assets/subscribe-loop.mp4" type="video/mp4">
@@ -692,6 +693,7 @@
       { id: "halloween", label: "Halloween", cls: "spooky" },
       { id: "corners",   label: "From the Shorts" }
     ],
+    playlists: { episodes: "https://www.youtube.com/playlist?list=PLdhR3yR-iSMY", songs: "https://www.youtube.com/playlist?list=PLC_vE81fvLKM" },
     corners: [
       { id: "lumi",  title: "Lumi's Morning Magic", sub: "A gentle start to the day, with Lumi.", sticker: "assets/stickers/lumi-02.webp",  url: "https://www.youtube.com/playlist?list=PLHCDpb80eMa8", chip: "lav" },
       { id: "reign", title: "Reign's Riddles",      sub: "Listen, look for clues, and guess!",    sticker: "assets/stickers/reign-11.webp", url: "https://www.youtube.com/playlist?list=PLI2Z2L5DgqWE", chip: "pink" },
@@ -724,7 +726,7 @@
         summary: "Lumi, Tilly and Reign meet Romi the Dino Expert in Dinosaur Land. They can only get back home if they find the three hidden dinosaurs. Join the adventure, learn cool dino facts, and see if they can do it together." },
       { label: "Episode 4", title: "The Lost Unicorn", sub: "Small brave steps", lesson: "Courage, friendship and small brave steps", img: "assets/ep4-unicorn.webp", url: "https://www.youtube.com/watch?v=bVLsTzncR84", premiere: "2026-10-24",
         summary: "A little unicorn is lost in Lumi's magical world and can't find the way home. Lumi, Pip, Reign, Tilly and their new unicorn friend set off on a big adventure together, crossing a wobbly bridge and facing brave new challenges. \"You don't have to fly high. Just try a little.\"" },
-      { label: "Episode 5", title: "The Missing Candy!", sub: "A Halloween adventure", lesson: "Problem solving, sharing and Halloween fun", img: "assets/ep5-candy.webp", url: "https://www.youtube.com/watch?v=uJMuJ9yu3-o",
+      { label: "Episode 5", title: "The Missing Candy!", sub: "A Halloween adventure", lesson: "Problem solving, sharing and Halloween fun", img: "assets/ep5-candy.webp", url: "https://www.youtube.com/watch?v=uJMuJ9yu3-o", premiere: "2026-10-31",
         summary: "The Halloween candy is missing! Can Lumi, Pip, Tilly and Reign follow the clues and find it before the night ends? A sweet, not-too-spooky Halloween adventure for the whole family." }
     ]
   };
@@ -881,7 +883,8 @@
   const today = new Date(); today.setHours(0, 0, 0, 0);
   const parseDay = d => { const [y, m, dd] = d.split("-").map(Number); return new Date(y, m - 1, dd); };
   const isUpcoming = d => !!d && parseDay(d) > today;
-  const isFresh = d => !!d && (today - parseDay(d)) / 864e5 <= 14;
+  const newestEp = SITE.episodes.filter(e => e.premiere && !(parseDay(e.premiere) > today)).map(e => e.premiere).sort().pop();
+  const isFresh = d => !!d && d === newestEp && (today - parseDay(d)) / 864e5 <= 14;
   const fmtDate = d => parseDay(d).toLocaleDateString("en-US", { month: "short", day: "numeric" });
   document.getElementById("episode-list").innerHTML = SITE.episodes.map(e => `
     <a class="ep" href="${esc(e.url)}" target="_blank" rel="noopener">
