@@ -227,6 +227,7 @@
 
   /* corners */
   .corners { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 18px; }
+  @media (min-width: 900px) { .corners { grid-template-columns: repeat(3, 1fr); } }
   .corner { display: grid; grid-template-columns: 110px 1fr; gap: 12px; align-items: center; padding: 16px; border-radius: 24px; text-decoration: none; color: var(--ink); background: var(--paper); box-shadow: var(--shadow); border-top: 6px solid var(--c); transition: transform .15s ease; min-width: 0; }
   .corner.lav { --c: var(--lav); } .corner.pink { --c: var(--pink); } .corner.sun { --c: var(--sun); } .corner.sky { --c: var(--sky); } .corner.mint { --c: var(--mint); }
   .corner .guest { display: inline-block; font-family: var(--display); font-weight: 600; font-size: .7rem; letter-spacing: .08em; text-transform: uppercase; background: var(--mint); color: var(--mint-ink); border-radius: 999px; padding: 2px 9px; margin-bottom: 4px; }
@@ -385,7 +386,7 @@
         </div>
         <span class="pwave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
       </div>
-      <div class="stat"><b id="sub-count">5,000+</b> families already watch along</div>
+      <div class="stat"><b id="sub-count">6,000+</b> families already watch along</div>
     </div>
     <div class="hero-friends" aria-hidden="true">
       <img src="assets/reign-peace.webp" alt="">
@@ -441,7 +442,7 @@
     <div class="section-head">
       <span class="eyebrow">Season one</span>
       <h2 class="bubble" id="h-episodes">Watch the episodes</h2>
-      <p>Each episode runs ten to fifteen minutes and follows one adventure. Between episodes, the channel is full of Shorts: Lumi's Morning Magic, Reign's Riddles, Tilly's Silly Jokes, Pip's Discoveries, a weekly dino fact from guest star Romi, and favorite moments from the episodes.</p>
+      <p>Each episode runs ten to fifteen minutes and follows one adventure. Between episodes, the channel is full of Shorts: Lumi's Morning Magic, Reign's Riddles, Tilly's Silly Jokes, Pip's Discoveries, soft Bedtime Stories, a weekly dino fact from guest star Romi, and favorite moments from the episodes.</p>
     </div>
     <div class="episodes" id="episode-list"></div>
     <p class="more-friends">Want them all in a row? <a class="btn btn-sun" style="margin-left:6px" href="https://www.youtube.com/playlist?list=PLdhR3yR-iSMY" target="_blank" rel="noopener">Play all episodes on YouTube →</a></p>
@@ -539,7 +540,7 @@
     contactEmail: "hello@lumimagicalworld.com",
     // Parents' list: MailerLite embedded form endpoint (public, no secret). Form "Lumi Parents".
     signupEndpoint: "https://assets.mailerlite.com/jsonp/2737912/forms/202176793592989071/subscribe",
-    subscribers: "5,000+",
+    subscribers: "6,000+",
     friends: [
       { id: "lumi", name: "Lumi", chip: "lav", img: "assets/lumi-stand.webp", alt: "assets/lumi-sit.webp", coloring: "lumi",
         video: "assets/lumi-loop.mp4", poster: "assets/lumi-poster.webp",
@@ -699,6 +700,7 @@
       { id: "reign", title: "Reign's Riddles",      sub: "Listen, look for clues, and guess!",    sticker: "assets/stickers/reign-11.webp", url: "https://www.youtube.com/playlist?list=PLI2Z2L5DgqWE", chip: "pink" },
       { id: "tilly", title: "Tilly's Silly Jokes",  sub: "Groan and giggle at the same time.",    sticker: "assets/stickers/tilly-02.webp", url: "https://www.youtube.com/playlist?list=PLfNQrpOPxQKc", chip: "sun" },
       { id: "pip",   title: "Pip's Discoveries",    sub: "Guess what Pip discovered today!",      sticker: "assets/stickers/pip-10.webp",   url: "", chip: "sky" },
+      { id: "bedtime", title: "Bedtime Stories", sub: "Soft night stories with Lumi & friends, for winding down.", sticker: "assets/stickers/lumi-09.webp", url: "https://www.youtube.com/playlist?list=PLKN8TQyuWoNA", chip: "lav" },
       { id: "romi",  title: "Romi's Dino Files",    sub: "Guest star! A new dinosaur fact every week.", sticker: "assets/stickers/romi-01.webp", url: "https://www.youtube.com/shorts/NfaRmsJA26k", chip: "mint", guest: true }
     ],
     // tags: party, everyday, episode
