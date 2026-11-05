@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Opening Lumi the fairy · Lumi and the Magical World</title>
+<link rel="icon" href="/assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f7f2ff;
+    --paper: #ffffff;
+    --ink: #3a2763;
+    --muted: #5f4f86;
+    --line: #e6dcf7;
+    --pink: #ff9ad5;
+    --sun: #ffd45e;
+    --sky: #8ad9f7;
+    --lav: #c6a6f7;
+    --gold: #f0b437;
+    --mint: #9fe3c0;
+    --mint-ink: #0f4a2e;
+    --shadow: 0 12px 32px rgba(72, 44, 130, .12);
+    --display: "Fredoka", "Trebuchet MS", "Segoe UI", sans-serif;
+    --body: "Nunito", "Segoe UI", Arial, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #1a1538; --paper: #272058; --ink: #f6f1ff; --muted: #bdb2e3; --line: #3a3170;
+      --gold: #ffc857; --mint-ink: #083322; --shadow: 0 12px 32px rgba(0, 0, 0, .4); color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #1a1538; --paper: #272058; --ink: #f6f1ff; --muted: #bdb2e3; --line: #3a3170;
+    --gold: #ffc857; --mint-ink: #083322; --shadow: 0 12px 32px rgba(0, 0, 0, .4); color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--body); font-size: 17px; line-height: 1.55;
+    padding-block: 0 56px;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+  }
+  .wrap { max-width: 1080px; margin: 0 auto; }
+  h1, h2, h3 { font-family: var(--display); font-weight: 600; line-height: 1.1; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(1.9rem, 4.5vw, 2.8rem); }
+  h3 { font-size: 1.25rem; }
+  p { margin: 0; max-width: 62ch; }
+  a { color: inherit; }
+  :focus-visible { outline: 3px solid #c2185b; outline-offset: 3px; border-radius: 6px; }
+  .skip { position: absolute; left: 16px; top: -60px; z-index: 100; background: var(--ink); color: var(--paper); padding: 10px 16px; border-radius: 12px; font-weight: 800; text-decoration: none; }
+  .skip:focus { top: 12px; }
+  .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+  /* bubble lettering: each letter gets its own pastel fill, white gloss and gold rim */
+  .bubble { font-family: var(--display); font-weight: 700; letter-spacing: .02em; width: fit-content; max-width: 100%; line-height: 1.15;
+    filter: drop-shadow(0 0 1.5px var(--gold)) drop-shadow(0 0 1.5px var(--gold)) drop-shadow(0 .06em 0 #d79a2b) drop-shadow(0 .12em .2em rgba(240, 180, 55, .3)); }
+  .bubble .W { display: inline-block; white-space: nowrap; }
+  .bubble .L { display: inline-block; color: transparent; -webkit-background-clip: text; background-clip: text;
+    background-image: linear-gradient(180deg, #fff 0%, var(--c) 30%, var(--c) 66%, var(--d) 100%); transform: rotate(var(--r, 0deg)); }
+  .bubble .L.c0 { --c: #ff9ad5; --d: #e46fb5; --r: -1.5deg; }
+  .bubble .L.c1 { --c: #ffd45e; --d: #f0b437; --r: 1deg; }
+  .bubble .L.c2 { --c: #8ad9f7; --d: #5fbde6; --r: -.8deg; }
+  .bubble .L.c3 { --c: #c6a6f7; --d: #a07de6; --r: 1.4deg; }
+  .bubble .S { display: inline-block; width: .3em; }
+  @media (prefers-reduced-motion: reduce) { .bubble .L { transform: none; } }
+  .eyebrow { font-family: var(--display); font-weight: 600; font-size: .85rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+  section { padding-block: 60px 20px; }
+  .section-head { display: grid; gap: 8px; margin-bottom: 28px; }
+  .section-head p { color: var(--muted); font-size: 1.05rem; }
+
+
+  html, body { height: 100%; }
+  body { margin: 0; font-family: var(--body); color: var(--ink); display: grid; place-items: center; text-align: center; padding: 24px;
+    background: linear-gradient(180deg, #cfe9ff 0%, #ead9ff 55%, #ffe3f2 100%); }
+  .box { display: grid; justify-items: center; gap: 14px; max-width: 420px; }
+  .box img { width: 150px; height: 150px; object-fit: contain; filter: drop-shadow(0 10px 16px rgba(60,30,110,.25)); animation: bob 1.6s ease-in-out infinite; }
+  @keyframes bob { 50% { transform: translateY(-8px); } }
+  h1 { font-family: var(--display); font-weight: 700; font-size: 1.6rem; margin: 0; }
+  p { margin: 0; color: var(--muted); }
+  .btn { display: inline-block; margin-top: 6px; padding: 12px 22px; border-radius: 999px; font-weight: 800; text-decoration: none; color: #5c1540;
+    background: linear-gradient(180deg, #ffb9e3, var(--pink)); box-shadow: 0 6px 0 #e07cc0; }
+  .back { font-size: .9rem; } .back a { color: var(--ink); font-weight: 800; }
+</style>
+</head>
+<body>
+  <main class="box">
+    <img src="/assets/stickers/lumi-02.webp" alt="">
+    <h1>Opening Lumi the fairy…</h1>
+    <p>Your PDF is on its way. Print it at home on letter-size paper.</p>
+    <a class="btn" id="go" href="/assets/coloring-lumi-fairy.pdf">Tap here if it doesn't open</a>
+    <p class="back"><a href="/coloring/lumi-fairy/">← Back to the page</a></p>
+  </main>
+  <script>setTimeout(function () { location.replace(document.getElementById("go").href); }, 900);</script>
+<!-- Cloudflare Web Analytics --><script src="/assets/cf.js"></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

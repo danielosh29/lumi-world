@@ -823,7 +823,7 @@
         <div class="tags">${(p.tags.includes("everyone") ? ["everyone"].concat(p.tags.filter(t => t === "halloween")) : p.tags).map(t => `<span class="chip ${TAG_CLS[t] || ""}">${esc(TAG_LABEL[t] || t)}</span>`).join("")}</div>
         <h3><a class="plain-link" href="coloring/${esc(p.file.split("/").pop().replace("coloring-", "").replace(".pdf", ""))}/">${esc(p.title)}</a></h3>
         <p>${esc(p.note)}</p>
-        <a class="btn btn-pink" href="${esc(p.file)}" target="_blank" rel="noopener" aria-label="Open PDF: ${esc(p.title)} (opens in a new tab)">Open PDF</a>
+        <a class="btn btn-pink" href="download/${esc(p.file.split("/").pop().replace("coloring-", "").replace(".pdf", ""))}/" target="_blank" rel="noopener" aria-label="Open PDF: ${esc(p.title)} (opens in a new tab)">Open PDF</a>
       </div>
     </article>`).join("");
 
@@ -845,7 +845,7 @@
         <div class="tags"><span class="chip ${p.tags[0] === "party" ? "pink" : "mint"}">${esc(p.tags[0] === "party" ? "Party" : "Every day")}</span><span class="chip" style="background:var(--bg);color:var(--muted)">${esc(p.pages)}</span></div>
         <h3><a class="plain-link" href="printables/${esc(p.file.split("/").pop().replace(".pdf", ""))}/">${esc(p.title)}</a></h3>
         <p>${esc(p.note)}</p>
-        <a class="btn btn-pink" href="${esc(p.file)}?v=${PRINT_V}" target="_blank" rel="noopener" aria-label="Open PDF: ${esc(p.title)}, ${esc(p.pages)} (opens in a new tab)">Open PDF</a>
+        <a class="btn btn-pink" href="download/print-${esc(p.file.split("/").pop().replace(".pdf", ""))}/" target="_blank" rel="noopener" aria-label="Open PDF: ${esc(p.title)}, ${esc(p.pages)} (opens in a new tab)">Open PDF</a>
       </div>
     </article>`).join("");
 
@@ -931,4 +931,4 @@
       .finally(() => { btn.disabled = false; });
   });
 </script>
-<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "4f74bf30d2654aa48943d2ab2bf50fdf"}'></script><!-- End Cloudflare Web Analytics -->
+<!-- Cloudflare Web Analytics --><script src="assets/cf.js"></script><!-- End Cloudflare Web Analytics -->
